@@ -1,16 +1,16 @@
-package card_test
+package poker_test
 
 import (
 	"fmt"
-	"game/card"
+	"game/poker"
 	"testing"
 )
 
 func TestCardsSort(t *testing.T) {
-	cards := card.Cards{
-		card.NewCard(0, 3),
-		card.NewCard(0, 6),
-		card.NewCard(0, 1),
+	cards := poker.Cards{
+		poker.NewCard(0, 3),
+		poker.NewCard(0, 6),
+		poker.NewCard(0, 1),
 	}
 	cards.Sort()
 	if cards[0].Value() >= cards[1].Value() || cards[1].Value() >= cards[2].Value() {
@@ -19,12 +19,12 @@ func TestCardsSort(t *testing.T) {
 }
 
 func TestCardsSuffle(t *testing.T) {
-	cards := card.Cards{
-		card.NewCard(0, 3),
-		card.NewCard(0, 4),
-		card.NewCard(0, 5),
-		card.NewCard(0, 6),
-		card.NewCard(0, 1),
+	cards := poker.Cards{
+		poker.NewCard(0, 3),
+		poker.NewCard(0, 4),
+		poker.NewCard(0, 5),
+		poker.NewCard(0, 6),
+		poker.NewCard(0, 1),
 	}
 	cards.Shuffle()
 	fmt.Println(cards)

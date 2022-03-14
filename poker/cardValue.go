@@ -1,4 +1,4 @@
-package card
+package poker
 
 type CardValue uint8
 

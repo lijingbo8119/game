@@ -1,4 +1,4 @@
-package card
+package poker
 
 var CardValueSortRanks = CardValues{
 	CardValueBigJoker,
