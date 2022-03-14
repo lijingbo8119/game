@@ -1,21 +1,21 @@
 package landlord
 
-import "game/card"
+import "game/poker"
 
-var LandlordCardValueRanks = card.CardValues{
-	card.CardValueThree,
-	card.CardValueFour,
-	card.CardValueFive,
-	card.CardValueSix,
-	card.CardValueSeven,
-	card.CardValueEight,
-	card.CardValueNine,
-	card.CardValueTen,
-	card.CardValueJack,
-	card.CardValueQueen,
-	card.CardValueKing,
-	card.CardValueAce,
-	card.CardValueTwo,
-	card.CardValueSmallJoker,
-	card.CardValueBigJoker,
+var LandlordCardValueRanks = poker.CardValues{
+	poker.CardValueThree,
+	poker.CardValueFour,
+	poker.CardValueFive,
+	poker.CardValueSix,
+	poker.CardValueSeven,
+	poker.CardValueEight,
+	poker.CardValueNine,
+	poker.CardValueTen,
+	poker.CardValueJack,
+	poker.CardValueQueen,
+	poker.CardValueKing,
+	poker.CardValueAce,
+	poker.CardValueTwo,
+	poker.CardValueSmallJoker,
+	poker.CardValueBigJoker,
 }

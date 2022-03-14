@@ -1,7 +1,7 @@
 package landlord
 
 import (
-	"game/card"
+	"game/poker"
 	"reflect"
 )
 
@@ -14,39 +14,39 @@ func (r cardPatternSequenceOfTripletsWithCards) Name() string {
 }
 
 func (r cardPatternSequenceOfTripletsWithCards) Valid() bool {
-	if r.Cards().Exists(func(c *card.Card) bool {
-		return c.Value() == card.CardValueBigJoker || c.Value() == card.CardValueSmallJoker
+	if r.Cards().Exists(func(c *poker.Card) bool {
+		return c.Value() == poker.CardValueBigJoker || c.Value() == poker.CardValueSmallJoker
 	}) {
 		return false
 	}
 
-	tripletsCardsCounts := r.Cards().Counts(func(val card.CardValue, count int) bool {
+	tripletsCardsCounts := r.Cards().Counts(func(val poker.CardValue, count int) bool {
 		return count == 3 || count == 4
 	})
 	ranks := LandlordCardValueRanks
-	if r.Cards().Exists(func(c *card.Card) bool {
+	if r.Cards().Exists(func(c *poker.Card) bool {
 		for val := range tripletsCardsCounts {
-			if c.Value() == card.CardValueAce && c.Value() == val {
+			if c.Value() == poker.CardValueAce && c.Value() == val {
 				return true
 			}
 		}
 		return false
-	}) && r.Cards().Exists(func(c *card.Card) bool {
+	}) && r.Cards().Exists(func(c *poker.Card) bool {
 		for val := range tripletsCardsCounts {
-			if c.Value() == card.CardValueTwo && c.Value() == val {
+			if c.Value() == poker.CardValueTwo && c.Value() == val {
 				return true
 			}
 		}
 		return false
 	}) {
-		ranks = card.CardValueSortRanks
+		ranks = poker.CardValueSortRanks
 	}
 	r.Cards().Sort(ranks)
 
 	if len(tripletsCardsCounts) < 2 {
 		return false
 	}
-	subCards := r.Cards().SubCards(func(c *card.Card) bool {
+	subCards := r.Cards().SubCards(func(c *poker.Card) bool {
 		for val := range tripletsCardsCounts {
 			if val == c.Value() {
 				return true
@@ -68,32 +68,32 @@ func (r cardPatternSequenceOfTripletsWithCards) Valid() bool {
 	return len(tripletsCardsCounts)*(3+1) == r.Cards().Length()
 }
 
-func (r cardPatternSequenceOfTripletsWithCards) Same(s card.CardPattern) bool {
+func (r cardPatternSequenceOfTripletsWithCards) Same(s poker.CardPattern) bool {
 	return r.Name() == s.Name()
 }
 
-func (r cardPatternSequenceOfTripletsWithCards) Equal(s card.CardPattern) bool {
+func (r cardPatternSequenceOfTripletsWithCards) Equal(s poker.CardPattern) bool {
 	return false
 }
 
-func (r cardPatternSequenceOfTripletsWithCards) Greeter(s card.CardPattern) bool {
+func (r cardPatternSequenceOfTripletsWithCards) Greeter(s poker.CardPattern) bool {
 	if !r.Same(s) || !r.Valid() || !s.Valid() || r.Cards().Length() != s.Cards().Length() {
 		return false
 	}
-	rCard := r.Cards().Last(func(c1 *card.Card) bool {
-		return r.Cards().Count(func(c2 *card.Card) bool {
+	rCard := r.Cards().Last(func(c1 *poker.Card) bool {
+		return r.Cards().Count(func(c2 *poker.Card) bool {
 			return c1.Value() == c2.Value()
 		}) >= 3
 	})
-	sCard := s.Cards().Last(func(c1 *card.Card) bool {
-		return s.Cards().Count(func(c2 *card.Card) bool {
+	sCard := s.Cards().Last(func(c1 *poker.Card) bool {
+		return s.Cards().Count(func(c2 *poker.Card) bool {
 			return c1.Value() == c2.Value()
 		}) >= 3
 	})
 	return LandlordCardValueRanks.Rank(rCard) > LandlordCardValueRanks.Rank(sCard)
 }
 
-func (r cardPatternSequenceOfTripletsWithCards) Lesser(s card.CardPattern) bool {
+func (r cardPatternSequenceOfTripletsWithCards) Lesser(s poker.CardPattern) bool {
 	return s.Greeter(r)
 }
 
@@ -101,10 +101,10 @@ func (r cardPatternSequenceOfTripletsWithCards) String() string {
 	return ""
 }
 
-func (r cardPatternSequenceOfTripletsWithCards) Factory(cards card.Cards) card.CardPattern {
+func (r cardPatternSequenceOfTripletsWithCards) Factory(cards poker.Cards) poker.CardPattern {
 	return cardPatternSequenceOfTripletsWithCards{cardPatternBase: cardPatternBase{cards: cards}}
 }
 
-func FactoryCardPatternSequenceOfTripletsWithCards(cards card.Cards) card.CardPattern {
+func FactoryCardPatternSequenceOfTripletsWithCards(cards poker.Cards) poker.CardPattern {
 	return cardPatternSequenceOfTripletsWithCards{}.Factory(cards)
 }

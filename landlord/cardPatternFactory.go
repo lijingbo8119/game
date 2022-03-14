@@ -1,10 +1,8 @@
 package landlord
 
-import (
-	"game/card"
-)
+import "game/poker"
 
-type patternFactory func(card.Cards) card.CardPattern
+type patternFactory func(poker.Cards) poker.CardPattern
 
 var patternFactories = []patternFactory{
 	FactoryCardPatternRocket,
@@ -27,7 +25,7 @@ var patternFactories = []patternFactory{
 	FactoryCardPatternSingle,
 }
 
-func PatternFactory(cards card.Cards) card.CardPattern {
+func PatternFactory(cards poker.Cards) poker.CardPattern {
 	for _, f := range patternFactories {
 		p := f(cards)
 		if p.Valid() {

@@ -1,162 +1,162 @@
 package landlord_test
 
 import (
-	"game/card"
 	"game/landlord"
+	"game/poker"
 	"testing"
 )
 
 func TestCardPatternSequenceOfTripletsFactory(t *testing.T) {
 	useCases := []struct {
-		cards card.Cards
+		cards poker.Cards
 		valid bool
 	}{
 		{
-			card.Cards{card.NewCard(card.CardSuitHeart, card.CardValueAce)},
+			poker.Cards{poker.NewCard(poker.CardSuitHeart, poker.CardValueAce)},
 			false,
 		},
 		{
-			card.Cards{
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
+			poker.Cards{
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
 			},
 			false,
 		},
 		{
-			card.Cards{
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
+			poker.Cards{
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
 			},
 			false,
 		},
 		{
-			card.Cards{
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
+			poker.Cards{
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
 			},
 			false,
 		},
 		{
-			card.Cards{
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
+			poker.Cards{
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
 			},
 			false,
 		},
 		{
-			card.Cards{
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
+			poker.Cards{
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
 			},
 			false,
 		},
 		{
-			card.Cards{
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
+			poker.Cards{
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
 			},
 			false,
 		},
 		{
-			card.Cards{
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
-				card.NewCard(card.CardSuitHeart, card.CardValueThree),
+			poker.Cards{
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueThree),
 			},
 			false,
 		},
 		{
-			card.Cards{
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
-				card.NewCard(card.CardSuitHeart, card.CardValueThree),
-				card.NewCard(card.CardSuitHeart, card.CardValueFour),
-				card.NewCard(card.CardSuitHeart, card.CardValueFive),
+			poker.Cards{
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueThree),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueFour),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueFive),
 			},
 			false,
 		},
 		{
-			card.Cards{
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
-				card.NewCard(card.CardSuitHeart, card.CardValueThree),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueFour),
-				card.NewCard(card.CardSuitHeart, card.CardValueFive),
+			poker.Cards{
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueThree),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueFour),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueFive),
 			},
 			false,
 		},
 		{
-			card.Cards{
-				card.NewCard(card.CardSuitHeart, card.CardValueTen),
-				card.NewCard(card.CardSuitHeart, card.CardValueJack),
-				card.NewCard(card.CardSuitHeart, card.CardValueQueen),
-				card.NewCard(card.CardSuitHeart, card.CardValueKing),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
+			poker.Cards{
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTen),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueJack),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueQueen),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueKing),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
 			},
 			false,
 		},
 		{
-			card.Cards{
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
-				card.NewCard(card.CardSuitHeart, card.CardValueThree),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
-				card.NewCard(card.CardSuitHeart, card.CardValueThree),
+			poker.Cards{
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueThree),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueThree),
 			},
 			false,
 		},
 		{
-			card.Cards{
-				card.NewCard(card.CardSuitHeart, card.CardValueQueen),
-				card.NewCard(card.CardSuitHeart, card.CardValueKing),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueQueen),
-				card.NewCard(card.CardSuitHeart, card.CardValueKing),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
+			poker.Cards{
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueQueen),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueKing),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueQueen),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueKing),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
 			},
 			false,
 		},
 		{
-			card.Cards{
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
-				card.NewCard(card.CardSuitHeart, card.CardValueThree),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
-				card.NewCard(card.CardSuitHeart, card.CardValueThree),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
-				card.NewCard(card.CardSuitHeart, card.CardValueThree),
+			poker.Cards{
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueThree),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueThree),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueThree),
 			},
 			true,
 		},
 		{
-			card.Cards{
-				card.NewCard(card.CardSuitHeart, card.CardValueQueen),
-				card.NewCard(card.CardSuitHeart, card.CardValueKing),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueQueen),
-				card.NewCard(card.CardSuitHeart, card.CardValueKing),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueQueen),
-				card.NewCard(card.CardSuitHeart, card.CardValueKing),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
+			poker.Cards{
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueQueen),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueKing),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueQueen),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueKing),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueQueen),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueKing),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
 			},
 			true,
 		},
@@ -171,31 +171,31 @@ func TestCardPatternSequenceOfTripletsFactory(t *testing.T) {
 
 func TestCardPatternSequenceOfTripletsGreeter(t *testing.T) {
 	useCases := []struct {
-		greeterCards card.Cards
-		cards        card.Cards
+		greeterCards poker.Cards
+		cards        poker.Cards
 	}{
 		{
-			card.Cards{
-				card.NewCard(card.CardSuitHeart, card.CardValueQueen),
-				card.NewCard(card.CardSuitHeart, card.CardValueKing),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueQueen),
-				card.NewCard(card.CardSuitHeart, card.CardValueKing),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueQueen),
-				card.NewCard(card.CardSuitHeart, card.CardValueKing),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
+			poker.Cards{
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueQueen),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueKing),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueQueen),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueKing),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueQueen),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueKing),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
 			},
-			card.Cards{
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
-				card.NewCard(card.CardSuitHeart, card.CardValueThree),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
-				card.NewCard(card.CardSuitHeart, card.CardValueThree),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
-				card.NewCard(card.CardSuitHeart, card.CardValueThree),
+			poker.Cards{
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueThree),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueThree),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueThree),
 			},
 		},
 	}

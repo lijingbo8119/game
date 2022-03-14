@@ -1,7 +1,7 @@
 package landlord
 
 import (
-	"game/card"
+	"game/poker"
 	"reflect"
 )
 
@@ -18,15 +18,15 @@ func (r cardPatternBomb) Valid() bool {
 	return r.Cards().Length() == 4 && r.Cards().First().Value() == r.Cards().Last().Value()
 }
 
-func (r cardPatternBomb) Same(s card.CardPattern) bool {
+func (r cardPatternBomb) Same(s poker.CardPattern) bool {
 	return r.Name() == s.Name()
 }
 
-func (r cardPatternBomb) Equal(s card.CardPattern) bool {
+func (r cardPatternBomb) Equal(s poker.CardPattern) bool {
 	return false
 }
 
-func (r cardPatternBomb) Greeter(s card.CardPattern) bool {
+func (r cardPatternBomb) Greeter(s poker.CardPattern) bool {
 	if !r.Valid() || !s.Valid() {
 		return false
 	}
@@ -36,7 +36,7 @@ func (r cardPatternBomb) Greeter(s card.CardPattern) bool {
 	return true
 }
 
-func (r cardPatternBomb) Lesser(s card.CardPattern) bool {
+func (r cardPatternBomb) Lesser(s poker.CardPattern) bool {
 	return s.Greeter(r)
 }
 
@@ -44,10 +44,10 @@ func (r cardPatternBomb) String() string {
 	return ""
 }
 
-func (r cardPatternBomb) Factory(cards card.Cards) card.CardPattern {
+func (r cardPatternBomb) Factory(cards poker.Cards) poker.CardPattern {
 	return cardPatternBomb{cardPatternBase: cardPatternBase{cards: cards}}
 }
 
-func FactoryCardPatternBomb(cards card.Cards) card.CardPattern {
+func FactoryCardPatternBomb(cards poker.Cards) poker.CardPattern {
 	return cardPatternBomb{}.Factory(cards)
 }

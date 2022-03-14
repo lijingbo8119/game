@@ -1,37 +1,37 @@
 package landlord
 
 import (
-	"game/card"
+	"game/poker"
 	"testing"
 )
 
 func TestPatternFactory(t *testing.T) {
 	useCases := []struct {
-		cards       card.Cards
+		cards       poker.Cards
 		patternName string
 	}{
 		{
-			card.Cards{card.NewCard(card.CardSuitHeart, card.CardValueAce)},
+			poker.Cards{poker.NewCard(poker.CardSuitHeart, poker.CardValueAce)},
 			cardPatternSingle{}.Name(),
 		},
 		{
-			card.Cards{card.NewCard(card.CardSuitHeart, card.CardValueAce), card.NewCard(card.CardSuitHeart, card.CardValueAce)},
+			poker.Cards{poker.NewCard(poker.CardSuitHeart, poker.CardValueAce), poker.NewCard(poker.CardSuitHeart, poker.CardValueAce)},
 			cardPatternPair{}.Name(),
 		},
 		{
-			card.Cards{card.NewCard(card.CardSuitHeart, card.CardValueAce), card.NewCard(card.CardSuitHeart, card.CardValueTwo)},
+			poker.Cards{poker.NewCard(poker.CardSuitHeart, poker.CardValueAce), poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo)},
 			"",
 		},
 		{
-			card.Cards{card.NewCard(card.CardSuitHeart, card.CardValueAce), card.NewCard(card.CardSuitHeart, card.CardValueAce), card.NewCard(card.CardSuitHeart, card.CardValueAce)},
+			poker.Cards{poker.NewCard(poker.CardSuitHeart, poker.CardValueAce), poker.NewCard(poker.CardSuitHeart, poker.CardValueAce), poker.NewCard(poker.CardSuitHeart, poker.CardValueAce)},
 			cardPatternTriplet{}.Name(),
 		},
 		{
-			card.Cards{card.NewCard(card.CardSuitHeart, card.CardValueAce), card.NewCard(card.CardSuitHeart, card.CardValueTwo), card.NewCard(card.CardSuitHeart, card.CardValueAce)},
+			poker.Cards{poker.NewCard(poker.CardSuitHeart, poker.CardValueAce), poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo), poker.NewCard(poker.CardSuitHeart, poker.CardValueAce)},
 			"",
 		},
 		{
-			card.Cards{card.NewCard(card.CardSuitHeart, card.CardValueAce), card.NewCard(card.CardSuitHeart, card.CardValueAce), card.NewCard(card.CardSuitHeart, card.CardValueAce), card.NewCard(card.CardSuitHeart, card.CardValueAce)},
+			poker.Cards{poker.NewCard(poker.CardSuitHeart, poker.CardValueAce), poker.NewCard(poker.CardSuitHeart, poker.CardValueAce), poker.NewCard(poker.CardSuitHeart, poker.CardValueAce), poker.NewCard(poker.CardSuitHeart, poker.CardValueAce)},
 			cardPatternBomb{}.Name(),
 		},
 	}

@@ -1,7 +1,7 @@
 package landlord
 
 import (
-	"game/card"
+	"game/poker"
 	"reflect"
 )
 
@@ -40,32 +40,32 @@ func (r cardPatternQuadrupletWithCards) Valid() bool {
 	return sum == 6
 }
 
-func (r cardPatternQuadrupletWithCards) Same(s card.CardPattern) bool {
+func (r cardPatternQuadrupletWithCards) Same(s poker.CardPattern) bool {
 	return r.Name() == s.Name()
 }
 
-func (r cardPatternQuadrupletWithCards) Equal(s card.CardPattern) bool {
+func (r cardPatternQuadrupletWithCards) Equal(s poker.CardPattern) bool {
 	return false
 }
 
-func (r cardPatternQuadrupletWithCards) Greeter(s card.CardPattern) bool {
+func (r cardPatternQuadrupletWithCards) Greeter(s poker.CardPattern) bool {
 	if !r.Same(s) || !r.Valid() || !s.Valid() {
 		return false
 	}
-	rCard := r.Cards().First(func(c1 *card.Card) bool {
-		return r.Cards().Count(func(c2 *card.Card) bool {
+	rCard := r.Cards().First(func(c1 *poker.Card) bool {
+		return r.Cards().Count(func(c2 *poker.Card) bool {
 			return c1.Value() == c2.Value()
 		}) == 4
 	})
-	sCard := s.Cards().First(func(c1 *card.Card) bool {
-		return s.Cards().Count(func(c2 *card.Card) bool {
+	sCard := s.Cards().First(func(c1 *poker.Card) bool {
+		return s.Cards().Count(func(c2 *poker.Card) bool {
 			return c1.Value() == c2.Value()
 		}) == 4
 	})
 	return LandlordCardValueRanks.Rank(rCard) > LandlordCardValueRanks.Rank(sCard)
 }
 
-func (r cardPatternQuadrupletWithCards) Lesser(s card.CardPattern) bool {
+func (r cardPatternQuadrupletWithCards) Lesser(s poker.CardPattern) bool {
 	return s.Greeter(r)
 }
 
@@ -73,10 +73,10 @@ func (r cardPatternQuadrupletWithCards) String() string {
 	return ""
 }
 
-func (r cardPatternQuadrupletWithCards) Factory(cards card.Cards) card.CardPattern {
+func (r cardPatternQuadrupletWithCards) Factory(cards poker.Cards) poker.CardPattern {
 	return cardPatternQuadrupletWithCards{cardPatternBase: cardPatternBase{cards: cards}}
 }
 
-func FactoryCardPatternQuadrupletWithCards(cards card.Cards) card.CardPattern {
+func FactoryCardPatternQuadrupletWithCards(cards poker.Cards) poker.CardPattern {
 	return cardPatternQuadrupletWithCards{}.Factory(cards)
 }

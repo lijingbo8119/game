@@ -1,61 +1,61 @@
 package landlord_test
 
 import (
-	"game/card"
 	"game/landlord"
+	"game/poker"
 	"testing"
 )
 
 func TestCardPatternQuadrupletWithPairsFactory(t *testing.T) {
 	useCases := []struct {
-		cards card.Cards
+		cards poker.Cards
 		valid bool
 	}{
 		{
-			card.Cards{
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
+			poker.Cards{
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
 			},
 			false,
 		},
 		{
-			card.Cards{
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
+			poker.Cards{
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
 			},
 			true,
 		},
 		{
-			card.Cards{
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
-				card.NewCard(card.CardSuitHeart, card.CardValueThree),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
-				card.NewCard(card.CardSuitHeart, card.CardValueThree),
+			poker.Cards{
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueThree),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueThree),
 			},
 			true,
 		},
 		{
-			card.Cards{
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
-				card.NewCard(card.CardSuitHeart, card.CardValueThree),
-				card.NewCard(card.CardSuitHeart, card.CardValueThree),
+			poker.Cards{
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueThree),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueThree),
 			},
 			false,
 		},
@@ -70,29 +70,29 @@ func TestCardPatternQuadrupletWithPairsFactory(t *testing.T) {
 
 func TestCardPatternQuadrupletWithPairsGreeter(t *testing.T) {
 	useCases := []struct {
-		greeterCards card.Cards
-		cards        card.Cards
+		greeterCards poker.Cards
+		cards        poker.Cards
 	}{
 		{
-			card.Cards{
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueThree),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueThree),
+			poker.Cards{
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueThree),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueThree),
 			},
-			card.Cards{
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueAce),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
-				card.NewCard(card.CardSuitHeart, card.CardValueThree),
-				card.NewCard(card.CardSuitHeart, card.CardValueTwo),
-				card.NewCard(card.CardSuitHeart, card.CardValueThree),
+			poker.Cards{
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueThree),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.CardSuitHeart, poker.CardValueThree),
 			},
 		},
 	}

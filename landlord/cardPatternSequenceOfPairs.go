@@ -1,7 +1,7 @@
 package landlord
 
 import (
-	"game/card"
+	"game/poker"
 	"reflect"
 )
 
@@ -15,16 +15,16 @@ func (r cardPatternSequenceOfPairs) Name() string {
 
 func (r cardPatternSequenceOfPairs) Valid() bool {
 	ranks := LandlordCardValueRanks
-	if r.Cards().Exists(func(c *card.Card) bool {
-		return c.Value() == card.CardValueAce
-	}) && r.Cards().Exists(func(c *card.Card) bool {
-		return c.Value() == card.CardValueTwo
+	if r.Cards().Exists(func(c *poker.Card) bool {
+		return c.Value() == poker.CardValueAce
+	}) && r.Cards().Exists(func(c *poker.Card) bool {
+		return c.Value() == poker.CardValueTwo
 	}) {
-		ranks = card.CardValueSortRanks
+		ranks = poker.CardValueSortRanks
 	}
 	r.Cards().Sort(ranks)
-	if r.Cards().Exists(func(c *card.Card) bool {
-		return c.Value() == card.CardValueBigJoker || c.Value() == card.CardValueSmallJoker
+	if r.Cards().Exists(func(c *poker.Card) bool {
+		return c.Value() == poker.CardValueBigJoker || c.Value() == poker.CardValueSmallJoker
 	}) {
 		return false
 	}
@@ -50,25 +50,25 @@ func (r cardPatternSequenceOfPairs) Valid() bool {
 	return true
 }
 
-func (r cardPatternSequenceOfPairs) Same(s card.CardPattern) bool {
+func (r cardPatternSequenceOfPairs) Same(s poker.CardPattern) bool {
 	return r.Name() == s.Name()
 }
 
-func (r cardPatternSequenceOfPairs) Equal(s card.CardPattern) bool {
+func (r cardPatternSequenceOfPairs) Equal(s poker.CardPattern) bool {
 	if !r.Same(s) || !r.Valid() || !s.Valid() || r.Cards().Length() != s.Cards().Length() {
 		return false
 	}
 	return r.Cards().First().Value() == s.Cards().First().Value()
 }
 
-func (r cardPatternSequenceOfPairs) Greeter(s card.CardPattern) bool {
+func (r cardPatternSequenceOfPairs) Greeter(s poker.CardPattern) bool {
 	if !r.Same(s) || !r.Valid() || !s.Valid() || r.Cards().Length() != s.Cards().Length() {
 		return false
 	}
 	return LandlordCardValueRanks.Rank(r.Cards().Last()) > LandlordCardValueRanks.Rank(s.Cards().Last())
 }
 
-func (r cardPatternSequenceOfPairs) Lesser(s card.CardPattern) bool {
+func (r cardPatternSequenceOfPairs) Lesser(s poker.CardPattern) bool {
 	return s.Greeter(r)
 }
 
@@ -76,10 +76,10 @@ func (r cardPatternSequenceOfPairs) String() string {
 	return ""
 }
 
-func (r cardPatternSequenceOfPairs) Factory(cards card.Cards) card.CardPattern {
+func (r cardPatternSequenceOfPairs) Factory(cards poker.Cards) poker.CardPattern {
 	return cardPatternSequenceOfPairs{cardPatternBase: cardPatternBase{cards: cards}}
 }
 
-func FactoryCardPatternSequenceOfPairs(cards card.Cards) card.CardPattern {
+func FactoryCardPatternSequenceOfPairs(cards poker.Cards) poker.CardPattern {
 	return cardPatternSequenceOfPairs{}.Factory(cards)
 }

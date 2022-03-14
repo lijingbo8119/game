@@ -1,14 +1,12 @@
 package landlord
 
-import (
-	"game/card"
-)
+import "game/poker"
 
 type cardPatternBase struct {
-	card.CardPattern
-	cards card.Cards
+	poker.CardPattern
+	cards poker.Cards
 }
 
-func (r cardPatternBase) Cards() card.Cards {
+func (r cardPatternBase) Cards() poker.Cards {
 	return r.cards
 }

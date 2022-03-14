@@ -1,26 +1,26 @@
 package landlord_test
 
 import (
-	"game/card"
 	"game/landlord"
+	"game/poker"
 	"testing"
 )
 
 func TestCardPatternPairFactory(t *testing.T) {
 	useCases := []struct {
-		cards card.Cards
+		cards poker.Cards
 		valid bool
 	}{
 		{
-			card.Cards{card.NewCard(card.CardSuitHeart, card.CardValueAce)},
+			poker.Cards{poker.NewCard(poker.CardSuitHeart, poker.CardValueAce)},
 			false,
 		},
 		{
-			card.Cards{card.NewCard(card.CardSuitHeart, card.CardValueAce), card.NewCard(card.CardSuitHeart, card.CardValueTwo)},
+			poker.Cards{poker.NewCard(poker.CardSuitHeart, poker.CardValueAce), poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo)},
 			false,
 		},
 		{
-			card.Cards{card.NewCard(card.CardSuitHeart, card.CardValueAce), card.NewCard(card.CardSuitHeart, card.CardValueAce)},
+			poker.Cards{poker.NewCard(poker.CardSuitHeart, poker.CardValueAce), poker.NewCard(poker.CardSuitHeart, poker.CardValueAce)},
 			true,
 		},
 	}
@@ -34,12 +34,12 @@ func TestCardPatternPairFactory(t *testing.T) {
 
 func TestCardPatternPairGreeter(t *testing.T) {
 	useCases := []struct {
-		greeterCards card.Cards
-		cards        card.Cards
+		greeterCards poker.Cards
+		cards        poker.Cards
 	}{
 		{
-			card.Cards{card.NewCard(card.CardSuitHeart, card.CardValueTwo), card.NewCard(card.CardSuitHeart, card.CardValueTwo)},
-			card.Cards{card.NewCard(card.CardSuitHeart, card.CardValueAce), card.NewCard(card.CardSuitHeart, card.CardValueAce)},
+			poker.Cards{poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo), poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo)},
+			poker.Cards{poker.NewCard(poker.CardSuitHeart, poker.CardValueAce), poker.NewCard(poker.CardSuitHeart, poker.CardValueAce)},
 		},
 	}
 	for index, useCase := range useCases {
