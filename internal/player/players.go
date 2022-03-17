@@ -93,7 +93,7 @@ func CreateOrGetPlayer(p *Player) *Player {
 		p.Id = uuid.Must(uuid.NewV4())
 	}
 	if player = FindPlayer(func(p2 *Player) bool {
-		return p2.Id == p.Id || p2.Name == p.Name
+		return p2.Id == p.Id || p2.Nickname == p.Nickname
 	}); player != nil {
 		return player
 	}
