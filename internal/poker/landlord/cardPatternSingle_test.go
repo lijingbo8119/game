@@ -12,11 +12,11 @@ func TestCardPatternSingleFactory(t *testing.T) {
 		valid bool
 	}{
 		{
-			poker.Cards{poker.NewCard(poker.CardSuitHeart, poker.CardValueAce)},
+			poker.Cards{poker.NewCard(poker.SuitHeart, poker.ValueAce)},
 			true,
 		},
 		{
-			poker.Cards{poker.NewCard(poker.CardSuitHeart, poker.CardValueAce), poker.NewCard(poker.CardSuitHeart, poker.CardValueAce)},
+			poker.Cards{poker.NewCard(poker.SuitHeart, poker.ValueAce), poker.NewCard(poker.SuitHeart, poker.ValueAce)},
 			false,
 		},
 	}
@@ -34,12 +34,12 @@ func TestCardPatternSingleGreeter(t *testing.T) {
 		cards        poker.Cards
 	}{
 		{
-			poker.Cards{poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo)},
-			poker.Cards{poker.NewCard(poker.CardSuitHeart, poker.CardValueAce)},
+			poker.Cards{poker.NewCard(poker.SuitHeart, poker.ValueTwo)},
+			poker.Cards{poker.NewCard(poker.SuitHeart, poker.ValueAce)},
 		},
 		{
-			poker.Cards{poker.NewCard(poker.CardSuitHeart, poker.CardValueBigJoker)},
-			poker.Cards{poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo)},
+			poker.Cards{poker.NewCard(poker.SuitHeart, poker.ValueBigJoker)},
+			poker.Cards{poker.NewCard(poker.SuitHeart, poker.ValueTwo)},
 		},
 	}
 	for index, useCase := range useCases {

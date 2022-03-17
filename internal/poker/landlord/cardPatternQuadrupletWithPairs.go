@@ -14,7 +14,7 @@ func (r cardPatternQuadrupletWithPairs) Name() string {
 }
 
 func (r cardPatternQuadrupletWithPairs) Valid() bool {
-	r.Cards().Sort(LandlordCardValueRanks)
+	r.Cards().Sort(LandlordValueRanks)
 	if r.Cards().Length() != 8 {
 		return false
 	}
@@ -75,7 +75,7 @@ func (r cardPatternQuadrupletWithPairs) Greeter(s poker.CardPattern) bool {
 			return c1.Value() == c2.Value()
 		}) == 4
 	})
-	return LandlordCardValueRanks.Rank(rCard) > LandlordCardValueRanks.Rank(sCard)
+	return LandlordValueRanks.Rank(rCard) > LandlordValueRanks.Rank(sCard)
 }
 
 func (r cardPatternQuadrupletWithPairs) Lesser(s poker.CardPattern) bool {

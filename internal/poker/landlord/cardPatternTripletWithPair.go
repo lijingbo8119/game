@@ -14,17 +14,17 @@ func (r cardPatternTripletWithPair) Name() string {
 }
 
 func (r cardPatternTripletWithPair) Valid() bool {
-	r.Cards().Sort(LandlordCardValueRanks)
+	r.Cards().Sort(LandlordValueRanks)
 	if r.Cards().Length() != 5 {
 		return false
 	}
-	firstCardValueCount := r.Cards().Count(func(c *poker.Card) bool {
+	firstValueCount := r.Cards().Count(func(c *poker.Card) bool {
 		return c.Value() == r.Cards().First().Value()
 	})
-	lastCardValueCount := r.Cards().Count(func(c *poker.Card) bool {
+	lastValueCount := r.Cards().Count(func(c *poker.Card) bool {
 		return c.Value() == r.Cards().Last().Value()
 	})
-	return (firstCardValueCount == 3 || lastCardValueCount == 3) && firstCardValueCount+lastCardValueCount == 5
+	return (firstValueCount == 3 || lastValueCount == 3) && firstValueCount+lastValueCount == 5
 }
 
 func (r cardPatternTripletWithPair) Same(s poker.CardPattern) bool {
@@ -52,7 +52,7 @@ func (r cardPatternTripletWithPair) Greeter(s poker.CardPattern) bool {
 			return c1.Value() == c2.Value()
 		}) == 3
 	})
-	return LandlordCardValueRanks.Rank(rCard) > LandlordCardValueRanks.Rank(sCard)
+	return LandlordValueRanks.Rank(rCard) > LandlordValueRanks.Rank(sCard)
 }
 
 func (r cardPatternTripletWithPair) Lesser(s poker.CardPattern) bool {

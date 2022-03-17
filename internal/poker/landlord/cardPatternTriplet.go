@@ -14,7 +14,7 @@ func (r cardPatternTriplet) Name() string {
 }
 
 func (r cardPatternTriplet) Valid() bool {
-	r.Cards().Sort(LandlordCardValueRanks)
+	r.Cards().Sort(LandlordValueRanks)
 	return r.Cards().Length() == 3 && r.Cards().First().Value() == r.Cards().Last().Value()
 }
 
@@ -33,7 +33,7 @@ func (r cardPatternTriplet) Greeter(s poker.CardPattern) bool {
 	if !r.Same(s) || !r.Valid() || !s.Valid() {
 		return false
 	}
-	return LandlordCardValueRanks.Rank(r.Cards().First()) > LandlordCardValueRanks.Rank(s.Cards().First())
+	return LandlordValueRanks.Rank(r.Cards().First()) > LandlordValueRanks.Rank(s.Cards().First())
 }
 
 func (r cardPatternTriplet) Lesser(s poker.CardPattern) bool {

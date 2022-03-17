@@ -15,31 +15,31 @@ func (r cardPatternSequenceOfTripletsWithPairs) Name() string {
 
 func (r cardPatternSequenceOfTripletsWithPairs) Valid() bool {
 	if r.Cards().Exists(func(c *poker.Card) bool {
-		return c.Value() == poker.CardValueBigJoker || c.Value() == poker.CardValueSmallJoker
+		return c.Value() == poker.ValueBigJoker || c.Value() == poker.ValueSmallJoker
 	}) {
 		return false
 	}
 
-	tripletsCardsCounts := r.Cards().Counts(func(val poker.CardValue, count int) bool {
+	tripletsCardsCounts := r.Cards().Counts(func(val poker.Value, count int) bool {
 		return count == 3
 	})
-	ranks := LandlordCardValueRanks
+	ranks := LandlordValueRanks
 	if r.Cards().Exists(func(c *poker.Card) bool {
 		for val := range tripletsCardsCounts {
-			if c.Value() == poker.CardValueAce && c.Value() == val {
+			if c.Value() == poker.ValueAce && c.Value() == val {
 				return true
 			}
 		}
 		return false
 	}) && r.Cards().Exists(func(c *poker.Card) bool {
 		for val := range tripletsCardsCounts {
-			if c.Value() == poker.CardValueTwo && c.Value() == val {
+			if c.Value() == poker.ValueTwo && c.Value() == val {
 				return true
 			}
 		}
 		return false
 	}) {
-		ranks = poker.CardValueSortRanks
+		ranks = poker.ValueSortRanks
 	}
 	r.Cards().Sort(ranks)
 
@@ -65,13 +65,13 @@ func (r cardPatternSequenceOfTripletsWithPairs) Valid() bool {
 			return false
 		}
 	}
-	pairCardsCounts := r.Cards().Counts(func(val poker.CardValue, count int) bool {
+	pairCardsCounts := r.Cards().Counts(func(val poker.Value, count int) bool {
 		return count == 2
 	})
-	tripletCardsCounts := r.Cards().Counts(func(val poker.CardValue, count int) bool {
+	tripletCardsCounts := r.Cards().Counts(func(val poker.Value, count int) bool {
 		return count == 3
 	})
-	quadrupletCardsCounts := r.Cards().Counts(func(val poker.CardValue, count int) bool {
+	quadrupletCardsCounts := r.Cards().Counts(func(val poker.Value, count int) bool {
 		return count == 4
 	})
 	if len(pairCardsCounts)+(len(quadrupletCardsCounts)*2) != len(tripletCardsCounts) {
@@ -102,7 +102,7 @@ func (r cardPatternSequenceOfTripletsWithPairs) Greeter(s poker.CardPattern) boo
 			return c1.Value() == c2.Value()
 		}) == 3
 	})
-	return LandlordCardValueRanks.Rank(rCard) > LandlordCardValueRanks.Rank(sCard)
+	return LandlordValueRanks.Rank(rCard) > LandlordValueRanks.Rank(sCard)
 }
 
 func (r cardPatternSequenceOfTripletsWithPairs) Lesser(s poker.CardPattern) bool {

@@ -14,7 +14,7 @@ func (r cardPatternBomb) Name() string {
 }
 
 func (r cardPatternBomb) Valid() bool {
-	r.Cards().Sort(LandlordCardValueRanks)
+	r.Cards().Sort(LandlordValueRanks)
 	return r.Cards().Length() == 4 && r.Cards().First().Value() == r.Cards().Last().Value()
 }
 
@@ -31,7 +31,7 @@ func (r cardPatternBomb) Greeter(s poker.CardPattern) bool {
 		return false
 	}
 	if r.Same(s) {
-		return LandlordCardValueRanks.Rank(r.Cards().First()) > LandlordCardValueRanks.Rank(s.Cards().First())
+		return LandlordValueRanks.Rank(r.Cards().First()) > LandlordValueRanks.Rank(s.Cards().First())
 	}
 	return true
 }

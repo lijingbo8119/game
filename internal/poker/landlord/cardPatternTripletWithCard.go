@@ -1,7 +1,6 @@
 package landlord
 
 import (
-	"fmt"
 	"game/internal/poker"
 	"reflect"
 )
@@ -15,17 +14,17 @@ func (r cardPatternTripletWithCard) Name() string {
 }
 
 func (r cardPatternTripletWithCard) Valid() bool {
-	r.Cards().Sort(LandlordCardValueRanks)
+	r.Cards().Sort(LandlordValueRanks)
 	if r.Cards().Length() != 4 {
 		return false
 	}
-	firstCardValueCount := r.Cards().Count(func(c *poker.Card) bool {
+	firstValueCount := r.Cards().Count(func(c *poker.Card) bool {
 		return c.Value() == r.Cards().First().Value()
 	})
-	lastCardValueCount := r.Cards().Count(func(c *poker.Card) bool {
+	lastValueCount := r.Cards().Count(func(c *poker.Card) bool {
 		return c.Value() == r.Cards().Last().Value()
 	})
-	return (firstCardValueCount == 3 || lastCardValueCount == 3) && firstCardValueCount+lastCardValueCount == 4
+	return (firstValueCount == 3 || lastValueCount == 3) && firstValueCount+lastValueCount == 4
 }
 
 func (r cardPatternTripletWithCard) Same(s poker.CardPattern) bool {
@@ -53,8 +52,7 @@ func (r cardPatternTripletWithCard) Greeter(s poker.CardPattern) bool {
 			return c1.Value() == c2.Value()
 		}) == 3
 	})
-	fmt.Println(rCard, sCard)
-	return LandlordCardValueRanks.Rank(rCard) > LandlordCardValueRanks.Rank(sCard)
+	return LandlordValueRanks.Rank(rCard) > LandlordValueRanks.Rank(sCard)
 }
 
 func (r cardPatternTripletWithCard) Lesser(s poker.CardPattern) bool {

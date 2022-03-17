@@ -14,12 +14,12 @@ func (r cardPatternRocket) Name() string {
 }
 
 func (r cardPatternRocket) Valid() bool {
-	r.Cards().Sort(LandlordCardValueRanks)
+	r.Cards().Sort(LandlordValueRanks)
 	if r.Cards().Length() != 2 {
 		return false
 	}
 	if r.Cards().Exists(func(c *poker.Card) bool {
-		return c.Value() != poker.CardValueSmallJoker && c.Value() != poker.CardValueBigJoker
+		return c.Value() != poker.ValueSmallJoker && c.Value() != poker.ValueBigJoker
 	}) {
 		return false
 	}

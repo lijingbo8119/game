@@ -1,34 +1,35 @@
 package poker
 
-type CardValue uint8
+type Value uint8
 
-type CardValueRank int
+type ValueRank int
 
 const (
-	CardValueAce        CardValue = 1
-	CardValueTwo        CardValue = 2
-	CardValueThree      CardValue = 3
-	CardValueFour       CardValue = 4
-	CardValueFive       CardValue = 5
-	CardValueSix        CardValue = 6
-	CardValueSeven      CardValue = 7
-	CardValueEight      CardValue = 8
-	CardValueNine       CardValue = 9
-	CardValueTen        CardValue = 10
-	CardValueJack       CardValue = 11
-	CardValueQueen      CardValue = 12
-	CardValueKing       CardValue = 13
-	CardValueSmallJoker CardValue = 14
-	CardValueBigJoker   CardValue = 15
+	ValueNone Value = iota
+	ValueAce
+	ValueTwo
+	ValueThree
+	ValueFour
+	ValueFive
+	ValueSix
+	ValueSeven
+	ValueEight
+	ValueNine
+	ValueTen
+	ValueJack
+	ValueQueen
+	ValueKing
+	ValueSmallJoker
+	ValueBigJoker
 )
 
-type CardValues []CardValue
+type Values []Value
 
-func (r CardValues) Rank(v *Card) CardValueRank {
+func (r Values) Rank(v *Card) ValueRank {
 	for index, val := range r {
 		if v.Value() == val {
-			return CardValueRank(index)
+			return ValueRank(index)
 		}
 	}
-	panic("CardValues Rank not found")
+	panic("Values Rank not found")
 }

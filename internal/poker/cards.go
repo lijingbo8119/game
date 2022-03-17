@@ -1,13 +1,12 @@
 package poker
 
 import (
-	"fmt"
 	"math/rand"
 	"time"
 )
 
 type CardBooleanClosure = func(*Card) bool
-type CardCountsClosure = func(val CardValue, count int) bool
+type CardCountsClosure = func(val Value, count int) bool
 
 type Cards []*Card
 
@@ -86,21 +85,21 @@ func (r *Cards) Remove(cards ...*Card) int {
 	return count
 }
 
-func (r Cards) Counts(closure ...CardCountsClosure) map[CardValue]int {
+func (r Cards) Counts(closure ...CardCountsClosure) map[Value]int {
 	_closure := func() CardCountsClosure {
 		if len(closure) > 0 {
 			return closure[0]
 		}
-		return func(val CardValue, count int) bool { return count > 0 }
+		return func(val Value, count int) bool { return count > 0 }
 	}()
-	temp := map[CardValue]int{}
+	temp := map[Value]int{}
 	for _, c := range r {
 		if _, ok := temp[c.Value()]; !ok {
 			temp[c.Value()] = 0
 		}
 		temp[c.Value()]++
 	}
-	result := map[CardValue]int{}
+	result := map[Value]int{}
 	for val, count := range temp {
 		if _closure(val, count) {
 			result[val] = count
@@ -130,12 +129,12 @@ func (r *Cards) Shuffle() {
 	}
 }
 
-func (r Cards) Sort(v ...CardValues) {
-	values := func() CardValues {
+func (r Cards) Sort(v ...Values) {
+	values := func() Values {
 		if len(v) > 0 {
 			return v[0]
 		}
-		return CardValueSortRanks
+		return ValueSortRanks
 	}()
 	for i := 0; i < len(r); i++ {
 		for j := i + 1; j < len(r); j++ {

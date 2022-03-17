@@ -32,7 +32,7 @@ func (r cardPatternSingle) Greeter(s poker.CardPattern) bool {
 	if !r.Same(s) || !r.Valid() || !s.Valid() {
 		return false
 	}
-	return LandlordCardValueRanks.Rank(r.Cards().First()) > LandlordCardValueRanks.Rank(s.Cards().First())
+	return LandlordValueRanks.Rank(r.Cards().First()) > LandlordValueRanks.Rank(s.Cards().First())
 }
 
 func (r cardPatternSingle) Lesser(s poker.CardPattern) bool {

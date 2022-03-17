@@ -1,57 +1,125 @@
 package poker
 
-type CardSuit uint8
+import "fmt"
+
+type Suit uint8
 
 const (
-	CardSuitNone    CardSuit = 0
-	CardSuitHeart   CardSuit = 1
-	CardSuitDiamond CardSuit = 2
-	CardSuitClub    CardSuit = 3
-	CardSuitSpade   CardSuit = 4
+	SuitNone Suit = iota
+	SuitHeart
+	SuitDiamond
+	SuitClub
+	SuitSpade
 )
 
 type Card struct {
-	suit  CardSuit
-	value CardValue
+	suit  Suit
+	value Value
 }
 
-func (r Card) Suit() CardSuit {
+func (r Card) Suit() Suit {
 	return r.suit
 }
 
-func (r Card) Value() CardValue {
+func (r Card) Value() Value {
 	return r.value
 }
 
 func (r Card) String() string {
-	suitMap := map[CardSuit]string{
-		CardSuitNone:    "none",
-		CardSuitHeart:   "heart",
-		CardSuitDiamond: "diamond",
-		CardSuitClub:    "club",
-		CardSuitSpade:   "spade",
+	suitMap := map[Suit]string{
+		SuitNone:    "none",
+		SuitHeart:   "♥",
+		SuitDiamond: "♣",
+		SuitClub:    "♦",
+		SuitSpade:   "♠",
 	}
-	valueMap := map[CardValue]string{
-		CardValueAce:        "A",
-		CardValueTwo:        "2",
-		CardValueThree:      "3",
-		CardValueFour:       "4",
-		CardValueFive:       "5",
-		CardValueSix:        "6",
-		CardValueSeven:      "7",
-		CardValueEight:      "8",
-		CardValueNine:       "9",
-		CardValueTen:        "10",
-		CardValueJack:       "J",
-		CardValueQueen:      "Q",
-		CardValueKing:       "K",
-		CardValueSmallJoker: "joker",
-		CardValueBigJoker:   "JOKER",
+	valueMap := map[Value]string{
+		ValueAce:        "A",
+		ValueTwo:        "2",
+		ValueThree:      "3",
+		ValueFour:       "4",
+		ValueFive:       "5",
+		ValueSix:        "6",
+		ValueSeven:      "7",
+		ValueEight:      "8",
+		ValueNine:       "9",
+		ValueTen:        "10",
+		ValueJack:       "J",
+		ValueQueen:      "Q",
+		ValueKing:       "K",
+		ValueSmallJoker: "joker",
+		ValueBigJoker:   "JOKER",
+	}
+	unicodeMap := map[string]string{
+		fmt.Sprintf("%d%d", SuitNone, ValueNone): "🂠",
+
+		fmt.Sprintf("%d%d", SuitNone, ValueBigJoker):   "🃏",
+		fmt.Sprintf("%d%d", SuitNone, ValueSmallJoker): "🃟",
+
+		fmt.Sprintf("%d%d", SuitHeart, ValueAce):   "🂱",
+		fmt.Sprintf("%d%d", SuitHeart, ValueTwo):   "🂲",
+		fmt.Sprintf("%d%d", SuitHeart, ValueThree): "🂳",
+		fmt.Sprintf("%d%d", SuitHeart, ValueFour):  "🂴",
+		fmt.Sprintf("%d%d", SuitHeart, ValueFive):  "🂵",
+		fmt.Sprintf("%d%d", SuitHeart, ValueSix):   "🂶",
+		fmt.Sprintf("%d%d", SuitHeart, ValueSeven): "🂷",
+		fmt.Sprintf("%d%d", SuitHeart, ValueEight): "🂸",
+		fmt.Sprintf("%d%d", SuitHeart, ValueNine):  "🂹",
+		fmt.Sprintf("%d%d", SuitHeart, ValueTen):   "🂺",
+		fmt.Sprintf("%d%d", SuitHeart, ValueJack):  "🂻",
+		fmt.Sprintf("%d%d", SuitHeart, ValueQueen): "🂽",
+		fmt.Sprintf("%d%d", SuitHeart, ValueKing):  "🂾",
+
+		fmt.Sprintf("%d%d", SuitDiamond, ValueAce):   "🃑",
+		fmt.Sprintf("%d%d", SuitDiamond, ValueTwo):   "🃒",
+		fmt.Sprintf("%d%d", SuitDiamond, ValueThree): "🃓",
+		fmt.Sprintf("%d%d", SuitDiamond, ValueFour):  "🃔",
+		fmt.Sprintf("%d%d", SuitDiamond, ValueFive):  "🃕",
+		fmt.Sprintf("%d%d", SuitDiamond, ValueSix):   "🃖",
+		fmt.Sprintf("%d%d", SuitDiamond, ValueSeven): "🃗",
+		fmt.Sprintf("%d%d", SuitDiamond, ValueEight): "🃘",
+		fmt.Sprintf("%d%d", SuitDiamond, ValueNine):  "🃙",
+		fmt.Sprintf("%d%d", SuitDiamond, ValueTen):   "🃚",
+		fmt.Sprintf("%d%d", SuitDiamond, ValueJack):  "🃛",
+		fmt.Sprintf("%d%d", SuitDiamond, ValueQueen): "🃝",
+		fmt.Sprintf("%d%d", SuitDiamond, ValueKing):  "🃞",
+
+		fmt.Sprintf("%d%d", SuitClub, ValueAce):   "🂱",
+		fmt.Sprintf("%d%d", SuitClub, ValueTwo):   "🂲",
+		fmt.Sprintf("%d%d", SuitClub, ValueThree): "🂳",
+		fmt.Sprintf("%d%d", SuitClub, ValueFour):  "🂴",
+		fmt.Sprintf("%d%d", SuitClub, ValueFive):  "🂵",
+		fmt.Sprintf("%d%d", SuitClub, ValueSix):   "🂶",
+		fmt.Sprintf("%d%d", SuitClub, ValueSeven): "🂷",
+		fmt.Sprintf("%d%d", SuitClub, ValueEight): "🂸",
+		fmt.Sprintf("%d%d", SuitClub, ValueNine):  "🂹",
+		fmt.Sprintf("%d%d", SuitClub, ValueTen):   "🂺",
+		fmt.Sprintf("%d%d", SuitClub, ValueJack):  "🂻",
+		fmt.Sprintf("%d%d", SuitClub, ValueQueen): "🂽",
+		fmt.Sprintf("%d%d", SuitClub, ValueKing):  "🂾",
+
+		fmt.Sprintf("%d%d", SuitSpade, ValueAce):   "🂡",
+		fmt.Sprintf("%d%d", SuitSpade, ValueTwo):   "🂢",
+		fmt.Sprintf("%d%d", SuitSpade, ValueThree): "🂣",
+		fmt.Sprintf("%d%d", SuitSpade, ValueFour):  "🂤",
+		fmt.Sprintf("%d%d", SuitSpade, ValueFive):  "🂥",
+		fmt.Sprintf("%d%d", SuitSpade, ValueSix):   "🂦",
+		fmt.Sprintf("%d%d", SuitSpade, ValueSeven): "🂧",
+		fmt.Sprintf("%d%d", SuitSpade, ValueEight): "🂨",
+		fmt.Sprintf("%d%d", SuitSpade, ValueNine):  "🂩",
+		fmt.Sprintf("%d%d", SuitSpade, ValueTen):   "🂪",
+		fmt.Sprintf("%d%d", SuitSpade, ValueJack):  "🂫",
+		fmt.Sprintf("%d%d", SuitSpade, ValueQueen): "🂭",
+		fmt.Sprintf("%d%d", SuitSpade, ValueKing):  "🂮",
+	}
+	display, ok := unicodeMap[fmt.Sprintf("%d%d", r.suit, r.value)]
+	if ok {
+		return display
 	}
 	return suitMap[r.suit] + valueMap[r.value]
 }
 
-func NewCard(suit CardSuit, value CardValue) *Card {
+func NewCard(suit Suit, value Value) *Card {
 	return &Card{
 		suit:  suit,
 		value: value,

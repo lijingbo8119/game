@@ -12,23 +12,23 @@ func TestCardPatternTripletFactory(t *testing.T) {
 		valid bool
 	}{
 		{
-			poker.Cards{poker.NewCard(poker.CardSuitHeart, poker.CardValueAce)},
+			poker.Cards{poker.NewCard(poker.SuitHeart, poker.ValueAce)},
 			false,
 		},
 		{
-			poker.Cards{poker.NewCard(poker.CardSuitHeart, poker.CardValueAce), poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo)},
+			poker.Cards{poker.NewCard(poker.SuitHeart, poker.ValueAce), poker.NewCard(poker.SuitHeart, poker.ValueTwo)},
 			false,
 		},
 		{
-			poker.Cards{poker.NewCard(poker.CardSuitHeart, poker.CardValueAce), poker.NewCard(poker.CardSuitHeart, poker.CardValueAce)},
+			poker.Cards{poker.NewCard(poker.SuitHeart, poker.ValueAce), poker.NewCard(poker.SuitHeart, poker.ValueAce)},
 			false,
 		},
 		{
-			poker.Cards{poker.NewCard(poker.CardSuitHeart, poker.CardValueAce), poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo), poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo)},
+			poker.Cards{poker.NewCard(poker.SuitHeart, poker.ValueAce), poker.NewCard(poker.SuitHeart, poker.ValueTwo), poker.NewCard(poker.SuitHeart, poker.ValueTwo)},
 			false,
 		},
 		{
-			poker.Cards{poker.NewCard(poker.CardSuitHeart, poker.CardValueAce), poker.NewCard(poker.CardSuitHeart, poker.CardValueAce), poker.NewCard(poker.CardSuitHeart, poker.CardValueAce)},
+			poker.Cards{poker.NewCard(poker.SuitHeart, poker.ValueAce), poker.NewCard(poker.SuitHeart, poker.ValueAce), poker.NewCard(poker.SuitHeart, poker.ValueAce)},
 			true,
 		},
 	}
@@ -46,8 +46,8 @@ func TestCardPatternTripletGreeter(t *testing.T) {
 		cards        poker.Cards
 	}{
 		{
-			poker.Cards{poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo), poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo), poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo)},
-			poker.Cards{poker.NewCard(poker.CardSuitHeart, poker.CardValueAce), poker.NewCard(poker.CardSuitHeart, poker.CardValueAce), poker.NewCard(poker.CardSuitHeart, poker.CardValueAce)},
+			poker.Cards{poker.NewCard(poker.SuitHeart, poker.ValueTwo), poker.NewCard(poker.SuitHeart, poker.ValueTwo), poker.NewCard(poker.SuitHeart, poker.ValueTwo)},
+			poker.Cards{poker.NewCard(poker.SuitHeart, poker.ValueAce), poker.NewCard(poker.SuitHeart, poker.ValueAce), poker.NewCard(poker.SuitHeart, poker.ValueAce)},
 		},
 	}
 	for index, useCase := range useCases {

@@ -14,17 +14,17 @@ func (r cardPatternSequence) Name() string {
 }
 
 func (r cardPatternSequence) Valid() bool {
-	ranks := LandlordCardValueRanks
+	ranks := LandlordValueRanks
 	if r.Cards().Exists(func(c *poker.Card) bool {
-		return c.Value() == poker.CardValueAce
+		return c.Value() == poker.ValueAce
 	}) && r.Cards().Exists(func(c *poker.Card) bool {
-		return c.Value() == poker.CardValueTwo
+		return c.Value() == poker.ValueTwo
 	}) {
-		ranks = poker.CardValueSortRanks
+		ranks = poker.ValueSortRanks
 	}
 	r.Cards().Sort(ranks)
 	if r.Cards().Exists(func(c *poker.Card) bool {
-		return c.Value() == poker.CardValueBigJoker || c.Value() == poker.CardValueSmallJoker
+		return c.Value() == poker.ValueBigJoker || c.Value() == poker.ValueSmallJoker
 	}) {
 		return false
 	}
@@ -56,7 +56,7 @@ func (r cardPatternSequence) Greeter(s poker.CardPattern) bool {
 	if !r.Same(s) || !r.Valid() || !s.Valid() || r.Cards().Length() != s.Cards().Length() {
 		return false
 	}
-	return LandlordCardValueRanks.Rank(r.Cards().Last()) > LandlordCardValueRanks.Rank(s.Cards().Last())
+	return LandlordValueRanks.Rank(r.Cards().Last()) > LandlordValueRanks.Rank(s.Cards().Last())
 }
 
 func (r cardPatternSequence) Lesser(s poker.CardPattern) bool {

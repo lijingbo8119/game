@@ -15,7 +15,7 @@ func (r cardPatternPair) Name() string {
 
 func (r cardPatternPair) Valid() bool {
 	if r.Cards().Exists(func(c *poker.Card) bool {
-		return c.Value() == poker.CardValueBigJoker || c.Value() == poker.CardValueSmallJoker
+		return c.Value() == poker.ValueBigJoker || c.Value() == poker.ValueSmallJoker
 	}) {
 		return false
 	}
@@ -37,7 +37,7 @@ func (r cardPatternPair) Greeter(s poker.CardPattern) bool {
 	if !r.Same(s) || !r.Valid() || !s.Valid() {
 		return false
 	}
-	return LandlordCardValueRanks.Rank(r.Cards().First()) > LandlordCardValueRanks.Rank(s.Cards().First())
+	return LandlordValueRanks.Rank(r.Cards().First()) > LandlordValueRanks.Rank(s.Cards().First())
 }
 
 func (r cardPatternPair) Lesser(s poker.CardPattern) bool {

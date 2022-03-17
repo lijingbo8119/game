@@ -12,49 +12,49 @@ func TestCardPatternTripletWithPairFactory(t *testing.T) {
 		valid bool
 	}{
 		{
-			poker.Cards{poker.NewCard(poker.CardSuitHeart, poker.CardValueAce)},
+			poker.Cards{poker.NewCard(poker.SuitHeart, poker.ValueAce)},
 			false,
 		},
 		{
 			poker.Cards{
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.SuitHeart, poker.ValueAce),
+				poker.NewCard(poker.SuitHeart, poker.ValueTwo),
 			},
 			false,
 		},
 		{
 			poker.Cards{
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.SuitHeart, poker.ValueAce),
+				poker.NewCard(poker.SuitHeart, poker.ValueAce),
+				poker.NewCard(poker.SuitHeart, poker.ValueAce),
 			},
 			false,
 		},
 		{
 			poker.Cards{
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.SuitHeart, poker.ValueAce),
+				poker.NewCard(poker.SuitHeart, poker.ValueAce),
+				poker.NewCard(poker.SuitHeart, poker.ValueAce),
+				poker.NewCard(poker.SuitHeart, poker.ValueTwo),
 			},
 			false,
 		},
 		{
 			poker.Cards{
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.SuitHeart, poker.ValueAce),
+				poker.NewCard(poker.SuitHeart, poker.ValueAce),
+				poker.NewCard(poker.SuitHeart, poker.ValueAce),
+				poker.NewCard(poker.SuitHeart, poker.ValueAce),
 			},
 			false,
 		},
 		{
 			poker.Cards{
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.SuitHeart, poker.ValueAce),
+				poker.NewCard(poker.SuitHeart, poker.ValueAce),
+				poker.NewCard(poker.SuitHeart, poker.ValueAce),
+				poker.NewCard(poker.SuitHeart, poker.ValueTwo),
+				poker.NewCard(poker.SuitHeart, poker.ValueTwo),
 			},
 			true,
 		},
@@ -74,18 +74,18 @@ func TestCardPatternTripletWithPairGreeter(t *testing.T) {
 	}{
 		{
 			poker.Cards{
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
+				poker.NewCard(poker.SuitHeart, poker.ValueTwo),
+				poker.NewCard(poker.SuitHeart, poker.ValueTwo),
+				poker.NewCard(poker.SuitHeart, poker.ValueTwo),
+				poker.NewCard(poker.SuitHeart, poker.ValueAce),
+				poker.NewCard(poker.SuitHeart, poker.ValueAce),
 			},
 			poker.Cards{
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueAce),
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
-				poker.NewCard(poker.CardSuitHeart, poker.CardValueTwo),
+				poker.NewCard(poker.SuitHeart, poker.ValueAce),
+				poker.NewCard(poker.SuitHeart, poker.ValueAce),
+				poker.NewCard(poker.SuitHeart, poker.ValueAce),
+				poker.NewCard(poker.SuitHeart, poker.ValueTwo),
+				poker.NewCard(poker.SuitHeart, poker.ValueTwo),
 			},
 		},
 	}
