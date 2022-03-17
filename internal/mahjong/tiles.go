@@ -1,0 +1,51 @@
+package mahjong
+
+var tileMap = map[string]Tile{
+	"🀢": {s: SuitFlower, r: RankOne},
+	"🀣": {s: SuitFlower, r: RankTwo},
+	"🀤": {s: SuitFlower, r: RankThree},
+	"🀥": {s: SuitFlower, r: RankFour},
+	"🀦": {s: SuitFlower, r: RankFive},
+	"🀧": {s: SuitFlower, r: RankSix},
+	"🀨": {s: SuitFlower, r: RankSeven},
+	"🀩": {s: SuitFlower, r: RankEight},
+
+	"🀄": {s: SuitDragon, r: RankOne},
+	"🀅": {s: SuitDragon, r: RankTwo},
+	"🀆": {s: SuitDragon, r: RankThree},
+
+	"🀀": {s: SuitWind, r: RankOne},
+	"🀁": {s: SuitWind, r: RankTwo},
+	"🀂": {s: SuitWind, r: RankThree},
+	"🀃": {s: SuitWind, r: RankFour},
+
+	"🀙": {s: SuitDot, r: RankOne},
+	"🀚": {s: SuitDot, r: RankTwo},
+	"🀛": {s: SuitDot, r: RankThree},
+	"🀜": {s: SuitDot, r: RankFour},
+	"🀝": {s: SuitDot, r: RankFive},
+	"🀞": {s: SuitDot, r: RankSix},
+	"🀟": {s: SuitDot, r: RankSeven},
+	"🀠": {s: SuitDot, r: RankEight},
+	"🀡": {s: SuitDot, r: RankNine},
+
+	"🀐": {s: SuitBamboo, r: RankOne},
+	"🀑": {s: SuitBamboo, r: RankTwo},
+	"🀒": {s: SuitBamboo, r: RankThree},
+	"🀓": {s: SuitBamboo, r: RankFour},
+	"🀔": {s: SuitBamboo, r: RankFive},
+	"🀕": {s: SuitBamboo, r: RankSix},
+	"🀖": {s: SuitBamboo, r: RankSeven},
+	"🀗": {s: SuitBamboo, r: RankEight},
+	"🀘": {s: SuitBamboo, r: RankNine},
+
+	"🀇": {s: SuitCharacter, r: RankOne},
+	"🀈": {s: SuitCharacter, r: RankTwo},
+	"🀉": {s: SuitCharacter, r: RankThree},
+	"🀊": {s: SuitCharacter, r: RankFour},
+	"🀋": {s: SuitCharacter, r: RankFive},
+	"🀌": {s: SuitCharacter, r: RankSix},
+	"🀍": {s: SuitCharacter, r: RankSeven},
+	"🀎": {s: SuitCharacter, r: RankEight},
+	"🀏": {s: SuitCharacter, r: RankNine},
+}
