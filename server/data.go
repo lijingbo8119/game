@@ -7,8 +7,8 @@ import (
 )
 
 type Data struct {
-	Cmd     DataCmd     `json:"cmd"`
-	Params  interface{} `json:"params"`
+	Cmd     DataCmd `json:"cmd"`
+	Payload any     `json:"payload"`
 }
 
 func (r Data) Send(c *websocket.Conn) error {
@@ -16,8 +16,8 @@ func (r Data) Send(c *websocket.Conn) error {
 	return c.WriteMessage(websocket.TextMessage, j)
 }
 
-func (r Data) ParseParams(ptr interface{}) error {
-	j, _ := json.Marshal(r.Params)
+func (r Data) ParsePayload(ptr any) error {
+	j, _ := json.Marshal(r.Payload)
 	return json.Unmarshal(j, ptr)
 }
 

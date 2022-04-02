@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gorilla/websocket"
@@ -11,7 +12,7 @@ func websocketServer(w http.ResponseWriter, r *http.Request) {
 		upgrader    = websocket.Upgrader{} // use default options
 		conn        *websocket.Conn
 		messageType int
-		payload     []byte
+		rawMessage  []byte
 		data        *Data
 		err         error
 	)
@@ -29,16 +30,19 @@ func websocketServer(w http.ResponseWriter, r *http.Request) {
 
 	defer conn.Close()
 	for {
-		if messageType, payload, err = conn.ReadMessage(); err != nil {
+		if messageType, rawMessage, err = conn.ReadMessage(); err != nil {
 			panic(err)
 		}
 		switch messageType {
 		case websocket.TextMessage:
-			if data, err = (&Data{}).Parse(payload); err != nil {
+			if data, err = (&Data{}).Parse(rawMessage); err != nil {
 				panic(err)
 			}
-			if err = events[data.Cmd](conn, *data); err != nil {
-				panic(err)
+			fmt.Println("event", data.Cmd, data)
+			if event, ok := events[data.Cmd]; ok {
+				if err = event(conn, *data); err != nil {
+					panic(err)
+				}
 			}
 		}
 	}

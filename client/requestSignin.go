@@ -9,8 +9,8 @@ func requestSignin(d server.Data) error {
 		params = server.EventSigninParams{}
 		err    error
 	)
-	if err = d.ParseParams(&params); err != nil {
+	if err = d.ParsePayload(&params); err != nil {
 		return err
 	}
-	return server.Data{Cmd: server.CmdSigninRequest, Params: params}.Send(conn)
+	return server.Data{Cmd: server.CmdSigninRequest, Payload: params}.Send(conn)
 }

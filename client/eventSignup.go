@@ -2,32 +2,30 @@ package client
 
 import (
 	"fmt"
+	"game/internal/player"
 	"game/server"
 
 	"github.com/gorilla/websocket"
 )
 
 func eventSignupFailed(c *websocket.Conn, d server.Data) error {
-	var (
-		params = server.EventSigninParams{}
-		err    error
-	)
-	if err = d.ParseParams(&params); err != nil {
-		return err
-	}
-	return server.Data{Cmd: server.CmdSigninRequest, Params: params}.Send(conn)
+	signupModel := currentViewModel(viewModelSignup{}.Name()).(*viewModelSignup)
+	signupModel.setStatusBarContent(d.Payload.(string))
+	return nil
 }
 
 func eventSignupSucceed(c *websocket.Conn, d server.Data) error {
 	var (
-		params = server.EventSigninParams{}
+		player = player.Player{}
 		err    error
 	)
-	if err = d.ParseParams(&params); err != nil {
+	if err = d.ParsePayload(&player); err != nil {
 		return err
 	}
-	if v := activeView(); v != nil && v.Name() == (viewSignup{}).Name() {
-		goToView(viewHall{}.Name())
+	setPlayer(&player)
+	if v := currentViewModel(); v != nil && v.Name() == (viewModelSignup{}.Name()) {
+		currentViewModel(viewModelSignin{}.Name())
+		return nil
 	}
 	return fmt.Errorf("eventSignupSucceed failed")
 }

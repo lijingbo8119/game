@@ -12,7 +12,7 @@ func eventSigninFailed(c *websocket.Conn, d server.Data) error {
 		params string
 		err    error
 	)
-	if err = d.ParseParams(&params); err != nil {
+	if err = d.ParsePayload(&params); err != nil {
 		return err
 	}
 	fmt.Println(d)
@@ -24,11 +24,11 @@ func eventSigninSucceed(c *websocket.Conn, d server.Data) error {
 		params string
 		err    error
 	)
-	if err = d.ParseParams(&params); err != nil {
+	if err = d.ParsePayload(&params); err != nil {
 		return err
 	}
-	if v := activeView(); v != nil && v.Name() == (viewSignin{}).Name() {
-		goToView(viewHall{}.Name())
+	if v := currentViewModel(); v != nil && v.Name() == (viewModelSignin{}.Name()) {
+		currentViewModel(viewModelHall{}.Name())
 	}
 	return fmt.Errorf("eventSigninSucceed failed")
 }

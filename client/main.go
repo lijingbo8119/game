@@ -1,11 +1,7 @@
 package client
 
 func Main() {
-	go func() {
-		viewsInit()
-		viewInit()
-		viewProgram.Start()
-	}()
+	go viewProgramStart()
 	connInit("localhost:8081")
 	websocketClient()
 }

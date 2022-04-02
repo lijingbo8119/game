@@ -2,15 +2,15 @@ package client
 
 import (
 	"game/server"
+	"game/util"
 )
 
-func requestSignup(d server.Data) error {
+func requestSignup(params server.EventSignupParams) error {
 	var (
-		params = server.EventSignupParams{}
-		err    error
+		err error
 	)
-	if err = d.ParseParams(&params); err != nil {
+	if err = util.ValidateStruct(params); err != nil {
 		return err
 	}
-	return server.Data{Cmd: server.CmdSignupRequest, Params: params}.Send(conn)
+	return server.Data{Cmd: server.CmdSignupRequest, Payload: params}.Send(conn)
 }

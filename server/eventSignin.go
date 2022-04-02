@@ -17,16 +17,16 @@ func eventSignin(c *websocket.Conn, d Data) error {
 		p      *player.Player
 		err    error
 	)
-	if err = d.ParseParams(&params); err != nil {
+	if err = d.ParsePayload(&params); err != nil {
 		return err
 	}
 	if p = player.FindPlayer(func(p *player.Player) bool {
 		return p.Nickname == params.Username
 	}); p == nil {
-		return Data{Cmd: CmdSigninFailedResponse, Params: "player exists already"}.Send(c)
+		return Data{Cmd: CmdSigninFailedResponse, Payload: "player exists already"}.Send(c)
 	}
 	if params.Password != p.Password {
-		return Data{Cmd: CmdSigninFailedResponse, Params: "invalid password"}.Send(c)
+		return Data{Cmd: CmdSigninFailedResponse, Payload: "invalid password"}.Send(c)
 	}
-	return Data{Cmd: CmdSigninSucceedResponse, Params: *p}.Send(c)
+	return Data{Cmd: CmdSigninSucceedResponse, Payload: *p}.Send(c)
 }
