@@ -32,6 +32,12 @@ func (r *viewModelSignup) updateCursorPos(msg tea.KeyMsg) {
 		if r.cursorPos < 2 {
 			r.cursorPos++
 		}
+	case tea.KeyTab:
+		if r.cursorPos < 2 {
+			r.cursorPos++
+		} else {
+			r.cursorPos = 0
+		}
 	default:
 		return
 	}
@@ -131,8 +137,13 @@ func (r *viewModelSignup) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch msg.Type {
+		case tea.KeySpace:
+			break
 		case tea.KeyUp, tea.KeyDown:
 			r.updateCursorPos(msg)
+			break
+		case tea.KeyTab:
+			return currentViewModel(viewModelSignin{}.Name()), nil
 		case tea.KeyEnter:
 			r.submit()
 			return r, nil
@@ -156,6 +167,7 @@ func (r viewModelSignup) View() string {
 	doc.WriteString(r.passwordInput.View())
 	doc.WriteString("\n\n")
 	// Status bar
+
 	doc.WriteString(r.statusBar.View())
 
 	if (viewStyle{}.PhysicalWidth()) > 0 {

@@ -36,6 +36,6 @@ func currentViewModel(name ...string) viewModel {
 
 func viewModelsInit() {
 	if currentviewModelName == "" {
-		currentviewModelName = viewModelSignup{}.Name()
+		currentviewModelName = viewModelSignin{}.Name()
 	}
 }

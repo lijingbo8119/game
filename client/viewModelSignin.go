@@ -2,200 +2,110 @@ package client
 
 import (
 	"fmt"
+	"game/server"
 	"reflect"
 	"strings"
+	"time"
 
+	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
-	"github.com/lucasb-eyer/go-colorful"
 )
-
-const (
-	// In real life situations we'd adjust the document to fit the width we've
-	// detected. In the case of this example we're hardcoding the width, and
-	// later using the detected width only to truncate in order to avoid jaggy
-	// wrapping.
-	width = 96
-
-	columnWidth = 30
-)
-
-// Style definitions.
-var (
-
-	// General.
-
-	subtle    = lipgloss.AdaptiveColor{Light: "#D9DCCF", Dark: "#383838"}
-	highlight = lipgloss.AdaptiveColor{Light: "#874BFD", Dark: "#7D56F4"}
-	special   = lipgloss.AdaptiveColor{Light: "#43BF6D", Dark: "#73F59F"}
-
-	divider = lipgloss.NewStyle().
-		SetString("•").
-		Padding(0, 1).
-		Foreground(subtle).
-		String()
-
-	urlRender = lipgloss.NewStyle().Foreground(special).Render
-
-	// Tabs.
-
-	activeTabBorder = lipgloss.Border{
-		Top:         "─",
-		Bottom:      " ",
-		Left:        "│",
-		Right:       "│",
-		TopLeft:     "╭",
-		TopRight:    "╮",
-		BottomLeft:  "┘",
-		BottomRight: "└",
-	}
-
-	tabBorder = lipgloss.Border{
-		Top:         "─",
-		Bottom:      "─",
-		Left:        "│",
-		Right:       "│",
-		TopLeft:     "╭",
-		TopRight:    "╮",
-		BottomLeft:  "┴",
-		BottomRight: "┴",
-	}
-
-	tab = lipgloss.NewStyle().
-		Border(tabBorder, true).
-		BorderForeground(highlight).
-		Padding(0, 1)
-
-	activeTab = tab.Copy().Border(activeTabBorder, true)
-
-	tabGap = tab.Copy().
-		BorderTop(false).
-		BorderLeft(false).
-		BorderRight(false)
-
-	// Title.
-
-	titleStyle = lipgloss.NewStyle().
-			MarginLeft(1).
-			MarginRight(5).
-			Padding(0, 1).
-			Italic(true).
-			Foreground(lipgloss.Color("#FFF7DB")).
-			SetString("Lip Gloss")
-
-	descStyle = lipgloss.NewStyle().MarginTop(1)
-
-	infoStyle = lipgloss.NewStyle().
-			BorderStyle(lipgloss.NormalBorder()).
-			BorderTop(true).
-			BorderForeground(subtle)
-
-	// Dialog.
-
-	dialogBoxStyle = lipgloss.NewStyle().
-			Border(lipgloss.RoundedBorder()).
-			BorderForeground(lipgloss.Color("#874BFD")).
-			Padding(1, 0).
-			BorderTop(true).
-			BorderLeft(true).
-			BorderRight(true).
-			BorderBottom(true)
-
-	buttonStyle = lipgloss.NewStyle().
-			Foreground(lipgloss.Color("#FFF7DB")).
-			Background(lipgloss.Color("#888B7E")).
-			Padding(0, 3).
-			MarginTop(1)
-
-	activeButtonStyle = buttonStyle.Copy().
-				Foreground(lipgloss.Color("#FFF7DB")).
-				Background(lipgloss.Color("#F25D94")).
-				MarginRight(2).
-				Underline(true)
-
-	// List.
-
-	list = lipgloss.NewStyle().
-		Border(lipgloss.NormalBorder(), false, true, false, false).
-		BorderForeground(subtle).
-		MarginRight(2).
-		Height(8).
-		Width(columnWidth + 1)
-
-	listHeader = lipgloss.NewStyle().
-			BorderStyle(lipgloss.NormalBorder()).
-			BorderBottom(true).
-			BorderForeground(subtle).
-			MarginRight(2).
-			Render
-
-	listItem = lipgloss.NewStyle().PaddingLeft(2).Render
-
-	checkMark = lipgloss.NewStyle().SetString("✓").
-			Foreground(special).
-			PaddingRight(1).
-			String()
-
-	listDone = func(s string) string {
-		return checkMark + lipgloss.NewStyle().
-			Strikethrough(true).
-			Foreground(lipgloss.AdaptiveColor{Light: "#969B86", Dark: "#696969"}).
-			Render(s)
-	}
-
-	// Paragraphs/History.
-
-	historyStyle = lipgloss.NewStyle().
-			Align(lipgloss.Left).
-			Foreground(lipgloss.Color("#FAFAFA")).
-			Background(highlight).
-			Margin(1, 3, 0, 0).
-			Padding(1, 2).
-			Height(19).
-			Width(columnWidth)
-
-	// Page.
-
-	docStyle = lipgloss.NewStyle().Padding(1, 0, 1, 0)
-)
-
-func colorGrid(xSteps, ySteps int) [][]string {
-	x0y0, _ := colorful.Hex("#F25D94")
-	x1y0, _ := colorful.Hex("#EDFF82")
-	x0y1, _ := colorful.Hex("#643AFF")
-	x1y1, _ := colorful.Hex("#14F9D5")
-
-	x0 := make([]colorful.Color, ySteps)
-	for i := range x0 {
-		x0[i] = x0y0.BlendLuv(x0y1, float64(i)/float64(ySteps))
-	}
-
-	x1 := make([]colorful.Color, ySteps)
-	for i := range x1 {
-		x1[i] = x1y0.BlendLuv(x1y1, float64(i)/float64(ySteps))
-	}
-
-	grid := make([][]string, ySteps)
-	for x := 0; x < ySteps; x++ {
-		y0 := x0[x]
-		grid[x] = make([]string, xSteps)
-		for y := 0; y < xSteps; y++ {
-			grid[x][y] = y0.BlendLuv(x1[x], float64(y)/float64(xSteps)).Hex()
-		}
-	}
-
-	return grid
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 
 type viewModelSignin struct {
 	viewModelBase
+	inited        bool
+	cursorPos     int
+	loading       bool
+	nameInput     textinput.Model
+	passwordInput textinput.Model
+	statusBar     viewComponentStatusBar
+}
+
+func (r *viewModelSignin) updateCursorPos(msg tea.KeyMsg) {
+	switch msg.Type {
+	case tea.KeyUp:
+		if r.cursorPos > 0 {
+			r.cursorPos--
+		}
+	case tea.KeyDown:
+		if r.cursorPos < 1 {
+			r.cursorPos++
+		}
+	case tea.KeyTab:
+		if r.cursorPos < 1 {
+			r.cursorPos++
+		} else {
+			r.cursorPos = 0
+		}
+	default:
+		return
+	}
+	r.nameInput.Blur()
+	r.passwordInput.Blur()
+	switch r.cursorPos {
+	case 0:
+		r.nameInput.Focus()
+	case 1:
+		r.passwordInput.Focus()
+	}
+}
+
+func (r *viewModelSignin) FocusedInputUpdateCmd(msg tea.Msg) tea.Cmd {
+	var (
+		model textinput.Model
+		cmd   tea.Cmd
+	)
+	switch r.cursorPos {
+	case 0:
+		model = r.nameInput
+	case 1:
+		model = r.passwordInput
+	}
+	model, cmd = model.Update(msg)
+	switch r.cursorPos {
+	case 0:
+		r.nameInput = model
+	case 1:
+		r.passwordInput = model
+	}
+	return cmd
+}
+
+func (r *viewModelSignin) setStatusBarContent(s string) {
+	r.loading = false
+	r.statusBar.content = fmt.Sprintf(s)
+}
+
+func (r *viewModelSignin) submit() {
+	r.setStatusBarContent("submitting")
+	r.loading = true
+	if err := requestSignin(server.EventSigninParams{
+		Username: r.nameInput.Value(),
+		Password: r.passwordInput.Value(),
+	}); err != nil {
+		r.setStatusBarContent(fmt.Sprintf("submit failed: %v", err))
+	}
+}
+
+func (r *viewModelSignin) Init() tea.Cmd {
+	if r.inited {
+		return nil
+	}
+	r.inited = true
+
+	r.nameInput = textinput.New()
+	r.nameInput.Placeholder = "Name"
+	r.nameInput.Focus()
+
+	r.passwordInput = textinput.New()
+	r.passwordInput.Placeholder = "Password"
+
+	r.statusBar = viewComponentStatusBar{
+		locationName: "Sign In",
+		ping:         1,
+		content:      "",
+	}
+	return nil
 }
 
 func (r viewModelSignin) Name() string {
@@ -205,8 +115,29 @@ func (r viewModelSignin) Name() string {
 // Update is called when messages are received. The idea is that you inspect the
 // message and send back an updated model accordingly. You can also return
 // a command, which is a function that performs I/O and returns a message.
-func (r viewModelSignin) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	return r, nil
+func (r *viewModelSignin) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	if currentViewModel().Name() != r.Name() {
+		return currentViewModel().Update(msg)
+	}
+	if r.loading {
+		return r, nil
+	}
+	switch msg := msg.(type) {
+	case tea.KeyMsg:
+		switch msg.Type {
+		case tea.KeySpace:
+			break
+		case tea.KeyUp, tea.KeyDown:
+			r.updateCursorPos(msg)
+			break
+		case tea.KeyTab:
+			return currentViewModel(viewModelSignup{}.Name()), nil
+		case tea.KeyEnter:
+			r.submit()
+			return r, nil
+		}
+	}
+	return r, r.FocusedInputUpdateCmd(msg)
 }
 
 // Views return a string based on data in the model. That string which will be
@@ -214,131 +145,20 @@ func (r viewModelSignin) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (r viewModelSignin) View() string {
 	doc := strings.Builder{}
 
-	// Tabs
-	{
-		row := lipgloss.JoinHorizontal(
-			lipgloss.Top,
-			activeTab.Render("Lip Gloss"),
-			tab.Render("Blush"),
-			tab.Render("Eye Shadow"),
-			tab.Render("Mascara"),
-			tab.Render("Foundation"),
-		)
-		gap := tabGap.Render(strings.Repeat(" ", max(0, width-lipgloss.Width(row)-2)))
-		row = lipgloss.JoinHorizontal(lipgloss.Bottom, row, gap)
-		doc.WriteString(row + "\n\n")
-	}
+	doc.WriteString("viewModelSignin" + time.Now().String())
 
-	// Title
-	{
-		var (
-			colors = colorGrid(1, 5)
-			title  strings.Builder
-		)
-
-		for i, v := range colors {
-			const offset = 2
-			c := lipgloss.Color(v[0])
-			fmt.Fprint(&title, titleStyle.Copy().MarginLeft(i*offset).Background(c))
-			if i < len(colors)-1 {
-				title.WriteRune('\n')
-			}
-		}
-
-		desc := lipgloss.JoinVertical(lipgloss.Left,
-			descStyle.Render("Style Definitions for Nice Terminal Layouts"),
-			infoStyle.Render("From Charm"+divider+urlRender("https://github.com/charmbracelet/lipgloss")),
-		)
-
-		row := lipgloss.JoinHorizontal(lipgloss.Top, title.String(), desc)
-		doc.WriteString(row + "\n\n")
-	}
-
-	// Dialog
-	{
-		okButton := activeButtonStyle.Render("Yes")
-		cancelButton := buttonStyle.Render("Maybe")
-
-		question := lipgloss.NewStyle().Width(50).Align(lipgloss.Center).Render("Are you sure you want to eat marmalade?")
-		buttons := lipgloss.JoinHorizontal(lipgloss.Top, okButton, cancelButton)
-		ui := lipgloss.JoinVertical(lipgloss.Center, question, buttons)
-
-		dialog := lipgloss.Place(width, 9,
-			lipgloss.Center, lipgloss.Center,
-			dialogBoxStyle.Render(ui),
-			lipgloss.WithWhitespaceChars("猫咪"),
-			lipgloss.WithWhitespaceForeground(subtle),
-		)
-
-		doc.WriteString(dialog + "\n\n")
-	}
-
-	// Color grid
-	colors := func() string {
-		colors := colorGrid(14, 8)
-
-		b := strings.Builder{}
-		for _, x := range colors {
-			for _, y := range x {
-				s := lipgloss.NewStyle().SetString("  ").Background(lipgloss.Color(y))
-				b.WriteString(s.String())
-			}
-			b.WriteRune('\n')
-		}
-
-		return b.String()
-	}()
-
-	lists := lipgloss.JoinHorizontal(lipgloss.Top,
-		list.Render(
-			lipgloss.JoinVertical(lipgloss.Left,
-				listHeader("Citrus Fruits to Try"),
-				listDone("Grapefruit"),
-				listDone("Yuzu"),
-				listItem("Citron"),
-				listItem("Kumquat"),
-				listItem("Pomelo"),
-			),
-		),
-		list.Copy().Width(columnWidth).Render(
-			lipgloss.JoinVertical(lipgloss.Left,
-				listHeader("Actual Lip Gloss Vendors"),
-				listItem("Glossier"),
-				listItem("Claire‘s Boutique"),
-				listDone("Nyx"),
-				listItem("Mac"),
-				listDone("Milk"),
-			),
-		),
-	)
-
-	doc.WriteString(lipgloss.JoinHorizontal(lipgloss.Top, lists, colors))
-
-	// Marmalade history
-	{
-		const (
-			historyA = "The Romans learned from the Greeks that quinces slowly cooked with honey would “set” when cool. The Apicius gives a recipe for preserving whole quinces, stems and leaves attached, in a bath of honey diluted with defrutum: Roman marmalade. Preserves of quince and lemon appear (along with rose, apple, plum and pear) in the Book of ceremonies of the Byzantine Emperor Constantine VII Porphyrogennetos."
-			historyB = "Medieval quince preserves, which went by the French name cotignac, produced in a clear version and a fruit pulp version, began to lose their medieval seasoning of spices in the 16th century. In the 17th century, La Varenne provided recipes for both thick and clear cotignac."
-			historyC = "In 1524, Henry VIII, King of England, received a “box of marmalade” from Mr. Hull of Exeter. This was probably marmelada, a solid quince paste from Portugal, still made and sold in southern Europe today. It became a favourite treat of Anne Boleyn and her ladies in waiting."
-		)
-
-		doc.WriteString(lipgloss.JoinHorizontal(
-			lipgloss.Top,
-			historyStyle.Copy().Align(lipgloss.Right).Render(historyA),
-			historyStyle.Copy().Align(lipgloss.Center).Render(historyB),
-			historyStyle.Copy().MarginRight(0).Render(historyC),
-		))
-
-		doc.WriteString("\n\n")
-	}
-
+	doc.WriteString("\n\n")
+	doc.WriteString(r.nameInput.View())
+	doc.WriteString("\n\n")
+	doc.WriteString(r.passwordInput.View())
+	doc.WriteString("\n\n")
 	// Status bar
-	doc.WriteString(viewComponentStatusBar{}.View())
+
+	doc.WriteString(r.statusBar.View())
 
 	if (viewStyle{}.PhysicalWidth()) > 0 {
 		docStyle = docStyle.MaxWidth(viewStyle{}.PhysicalWidth())
 	}
 
-	// Okay, let's print it
 	return docStyle.Render(doc.String())
 }
