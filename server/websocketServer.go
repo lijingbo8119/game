@@ -38,8 +38,8 @@ func websocketServer(w http.ResponseWriter, r *http.Request) {
 			if data, err = (&Data{}).Parse(rawMessage); err != nil {
 				panic(err)
 			}
-			fmt.Println("event", data.Cmd, data)
-			if event, ok := events[data.Cmd]; ok {
+			fmt.Println("event", data.NetCmd, data)
+			if event, ok := events[data.NetCmd]; ok {
 				if err = event(conn, *data); err != nil {
 					panic(err)
 				}

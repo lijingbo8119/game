@@ -5,7 +5,6 @@ import (
 	"game/server"
 	"reflect"
 	"strings"
-	"time"
 
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
@@ -16,6 +15,7 @@ type viewModelSignup struct {
 	inited        bool
 	cursorPos     int
 	loading       bool
+	tabs          viewComponentTabs
 	nameInput     textinput.Model
 	nicknameInput textinput.Model
 	passwordInput textinput.Model
@@ -54,7 +54,7 @@ func (r *viewModelSignup) updateCursorPos(msg tea.KeyMsg) {
 	}
 }
 
-func (r *viewModelSignup) FocusedInputUpdateCmd(msg tea.Msg) tea.Cmd {
+func (r *viewModelSignup) FocusedInputUpdateNetCmd(msg tea.Msg) tea.Cmd {
 	var (
 		model textinput.Model
 		cmd   tea.Cmd
@@ -102,6 +102,13 @@ func (r *viewModelSignup) Init() tea.Cmd {
 	}
 	r.inited = true
 
+	r.tabs = newViewComponentTabs(
+		viewComponentTab{Content: "Sign In", Active: false, Updater: nil},
+		viewComponentTab{Content: "Sign Up", Active: true, Updater: func(msg tea.Msg) (tea.Model, tea.Cmd) {
+			return currentViewModel(viewModelSignin{}.Name()), nil
+		}},
+	)
+
 	r.nameInput = textinput.New()
 	r.nameInput.Placeholder = "Name"
 	r.nameInput.Focus()
@@ -143,13 +150,13 @@ func (r *viewModelSignup) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			r.updateCursorPos(msg)
 			break
 		case tea.KeyTab:
-			return currentViewModel(viewModelSignin{}.Name()), nil
+			return r.tabs.Update(msg)
 		case tea.KeyEnter:
 			r.submit()
 			return r, nil
 		}
 	}
-	return r, r.FocusedInputUpdateCmd(msg)
+	return r, r.FocusedInputUpdateNetCmd(msg)
 }
 
 // Views return a string based on data in the model. That string which will be
@@ -157,8 +164,7 @@ func (r *viewModelSignup) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (r viewModelSignup) View() string {
 	doc := strings.Builder{}
 
-	doc.WriteString("viewModelSignup" + time.Now().String())
-
+	doc.WriteString(r.tabs.View())
 	doc.WriteString("\n\n")
 	doc.WriteString(r.nameInput.View())
 	doc.WriteString("\n\n")

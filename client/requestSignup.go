@@ -12,5 +12,5 @@ func requestSignup(params server.EventSignupParams) error {
 	if err = util.ValidateStruct(params); err != nil {
 		return err
 	}
-	return server.Data{Cmd: server.CmdSignupRequest, Payload: params}.Send(conn)
+	return server.Data{NetCmd: server.NetCmdSignupRequest, Payload: params}.Send(conn)
 }

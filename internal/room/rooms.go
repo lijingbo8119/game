@@ -25,6 +25,12 @@ func CreateOrGetRoom(r Room) Room {
 	return r
 }
 
+func GetRooms() []Room {
+	roomsMux.RLock()
+	defer roomsMux.RUnlock()
+	return rooms
+}
+
 func FindRoom(closure func(r Room) bool) Room {
 	roomsMux.RLock()
 	defer roomsMux.RUnlock()

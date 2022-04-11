@@ -1,6 +1,7 @@
 package room
 
 import (
+	"fmt"
 	"game/internal/player"
 
 	"github.com/gofrs/uuid"
@@ -26,25 +27,29 @@ func (r roomBase) Players() player.Players {
 	return r.players
 }
 
-func (r roomBase) Enter(p *player.Player) bool {
-	if r.players.Exists(func(p2 *player.Player) bool {
-		return p == p2
-	}) {
-		return true
-	}
-	if room := FindRoomByPlayerId(p.Id); room != nil {
-		return false
-	}
-	r.players.Append(p)
-	return true
+func (r roomBase) HasPlayer(p *player.Player) bool {
+	return r.Players().Exists(func(_p *player.Player) bool {
+		return p == _p
+	})
 }
 
-func (r roomBase) Leave(p *player.Player) bool {
+func (r roomBase) Enter(p *player.Player) error {
+	if r.HasPlayer(p) {
+		return nil
+	}
+	if room := FindRoomByPlayerId(p.Id); room != nil && room.Name() != (RoomHall{}).Name() {
+		return fmt.Errorf("Enter room error")
+	}
+	r.players.Append(p)
+	return nil
+}
+
+func (r roomBase) Leave(p *player.Player) error {
 	if !r.players.Exists(func(p2 *player.Player) bool {
 		return p == p2
 	}) {
-		return false
+		return nil
 	}
 	r.players.Remove(p)
-	return true
+	return nil
 }

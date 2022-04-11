@@ -28,7 +28,7 @@ func Execute() {
 		},
 	}
 
-	var rootCmd = &cobra.Command{Use: "app"}
-	rootCmd.AddCommand(cmdServer, cmdClient)
-	rootCmd.Execute()
+	var rootNetCmd = &cobra.Command{Use: "app"}
+	rootNetCmd.AddCommand(cmdServer, cmdClient)
+	rootNetCmd.Execute()
 }

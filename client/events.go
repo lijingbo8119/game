@@ -2,9 +2,9 @@ package client
 
 import "game/server"
 
-var events = map[server.DataCmd]server.EventClosure{
-	server.CmdSignupFailedResponse:  eventSignupFailed,
-	server.CmdSignupSucceedResponse: eventSignupSucceed,
-	server.CmdSigninFailedResponse:  eventSigninFailed,
-	server.CmdSigninSucceedResponse: eventSigninFailed,
+var events = map[server.NetCmd]server.EventClosure{
+	server.NetCmdSignupFailedResponse:  eventSignupFailed,
+	server.NetCmdSignupSucceedResponse: eventSignupSucceed,
+	server.NetCmdSigninFailedResponse:  eventSigninFailed,
+	server.NetCmdSigninSucceedResponse: eventSigninFailed,
 }

@@ -58,18 +58,6 @@ var (
 		BottomRight: "┴",
 	}
 
-	tab = lipgloss.NewStyle().
-		Border(tabBorder, true).
-		BorderForeground(highlight).
-		Padding(0, 1)
-
-	activeTab = tab.Copy().Border(activeTabBorder, true)
-
-	tabGap = tab.Copy().
-		BorderTop(false).
-		BorderLeft(false).
-		BorderRight(false)
-
 	// Title.
 
 	titleStyle = lipgloss.NewStyle().

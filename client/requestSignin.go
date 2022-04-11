@@ -12,5 +12,5 @@ func requestSignin(params server.EventSigninParams) error {
 	if err = util.ValidateStruct(params); err != nil {
 		return err
 	}
-	return server.Data{Cmd: server.CmdSigninRequest, Payload: params}.Send(conn)
+	return server.Data{NetCmd: server.NetCmdSigninRequest, Payload: params}.Send(conn)
 }

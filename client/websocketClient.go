@@ -27,8 +27,8 @@ func websocketClient() {
 			if data, err = (&server.Data{}).Parse(rawMessage); err != nil {
 				panic(err)
 			}
-			if event, ok := events[data.Cmd]; ok {
-				util.LogInfo("event", zap.Any("cmd", data.Cmd), zap.Any("data", data))
+			if event, ok := events[data.NetCmd]; ok {
+				util.LogInfo("event", zap.Any("cmd", data.NetCmd), zap.Any("data", data))
 				if err = event(c, *data); err != nil {
 					panic(err)
 				}

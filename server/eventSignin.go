@@ -21,12 +21,12 @@ func eventSignin(c *websocket.Conn, d Data) error {
 		return err
 	}
 	if p = player.FindPlayer(func(p *player.Player) bool {
-		return p.Nickname == params.Username
+		return p.Username == params.Username
 	}); p == nil {
-		return Data{Cmd: CmdSigninFailedResponse, Payload: "player exists already"}.Send(c)
+		return Data{NetCmd: NetCmdSigninFailedResponse, Payload: "player exists already"}.Send(c)
 	}
 	if params.Password != p.Password {
-		return Data{Cmd: CmdSigninFailedResponse, Payload: "invalid password"}.Send(c)
+		return Data{NetCmd: NetCmdSigninFailedResponse, Payload: "invalid password"}.Send(c)
 	}
-	return Data{Cmd: CmdSigninSucceedResponse, Payload: *p}.Send(c)
+	return Data{NetCmd: NetCmdSigninSucceedResponse, Payload: *p}.Send(c)
 }

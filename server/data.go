@@ -7,8 +7,8 @@ import (
 )
 
 type Data struct {
-	Cmd     DataCmd `json:"cmd"`
-	Payload any     `json:"payload"`
+	NetCmd  NetCmd `json:"cmd"`
+	Payload any    `json:"payload"`
 }
 
 func (r Data) Send(c *websocket.Conn) error {
