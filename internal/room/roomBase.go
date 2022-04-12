@@ -1,15 +1,13 @@
 package room
 
 import (
-	"fmt"
-	"game/internal/player"
-
 	"github.com/gofrs/uuid"
+	"github.com/samber/lo"
 )
 
 type roomBase struct {
-	id      uuid.UUID
-	players player.Players
+	id     uuid.UUID
+	Frames []frame
 }
 
 func (r roomBase) Id() uuid.UUID {
@@ -19,37 +17,23 @@ func (r roomBase) Id() uuid.UUID {
 	return r.id
 }
 
-func (r roomBase) Name() string {
-	return "Base"
-}
-
-func (r roomBase) Players() player.Players {
-	return r.players
-}
-
-func (r roomBase) HasPlayer(p *player.Player) bool {
-	return r.Players().Exists(func(_p *player.Player) bool {
-		return p == _p
-	})
-}
-
-func (r roomBase) Enter(p *player.Player) error {
-	if r.HasPlayer(p) {
-		return nil
+// without framePlayerSay
+func (r roomBase) lastFrame(closure ...func(f frame) bool) frame {
+	var _closure func(f frame) bool
+	if len(closure) > 0 {
+		_closure = closure[0]
 	}
-	if room := FindRoomByPlayerId(p.Id); room != nil && room.Name() != (RoomHall{}).Name() {
-		return fmt.Errorf("Enter room error")
+	for i := len(r.Frames) - 1; i >= 0; i-- {
+		if _, ok := r.Frames[i].(framePlayerSay); ok {
+			continue
+		}
+		if _closure == nil || _closure(r.Frames[i]) {
+			return r.Frames[i]
+		}
 	}
-	r.players.Append(p)
 	return nil
 }
 
-func (r roomBase) Leave(p *player.Player) error {
-	if !r.players.Exists(func(p2 *player.Player) bool {
-		return p == p2
-	}) {
-		return nil
-	}
-	r.players.Remove(p)
-	return nil
+func (r roomBase) framesCountBy(closure func(f frame) bool) int {
+	return lo.CountBy(r.Frames, closure)
 }
