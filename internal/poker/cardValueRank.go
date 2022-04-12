@@ -1,8 +1,8 @@
 package poker
 
 var ValueSortRanks = Values{
-	ValueBigJoker,
-	ValueSmallJoker,
+	ValueColoredJoker,
+	ValueJoker,
 	ValueAce,
 	ValueTwo,
 	ValueThree,

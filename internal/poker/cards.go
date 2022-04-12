@@ -68,6 +68,15 @@ func (r *Cards) Append(cards ...*Card) {
 	*r = append(*r, cards...)
 }
 
+func (r *Cards) Pop() *Card {
+	c := r.Last()
+	if c == nil {
+		return nil
+	}
+	r.Remove(c)
+	return c
+}
+
 func (r *Cards) Remove(cards ...*Card) int {
 	count := 0
 	temp := Cards{}
@@ -154,4 +163,37 @@ func (r Cards) String() string {
 		}
 	}
 	return res
+}
+
+func NewDeckCards() Cards {
+	suits := []Suit{
+		SuitHeart,
+		SuitDiamond,
+		SuitClub,
+		SuitSpade,
+	}
+	values := []Value{
+		ValueAce,
+		ValueTwo,
+		ValueThree,
+		ValueFour,
+		ValueFive,
+		ValueSix,
+		ValueSeven,
+		ValueEight,
+		ValueNine,
+		ValueTen,
+		ValueJack,
+		ValueQueen,
+		ValueKing,
+	}
+	cards := Cards{}
+	cards.Append(NewCard(SuitNone, ValueColoredJoker))
+	cards.Append(NewCard(SuitNone, ValueJoker))
+	for _, suit := range suits {
+		for _, value := range values {
+			cards.Append(NewCard(suit, value))
+		}
+	}
+	return cards
 }

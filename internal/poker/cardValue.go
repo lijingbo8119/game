@@ -19,8 +19,8 @@ const (
 	ValueJack
 	ValueQueen
 	ValueKing
-	ValueSmallJoker
-	ValueBigJoker
+	ValueJoker
+	ValueColoredJoker
 )
 
 type Values []Value
