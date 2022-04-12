@@ -10,7 +10,7 @@ func viewProgramStart() {
 	viewModelsInit()
 
 	// Initialize our program
-	p := tea.NewProgram(currentViewModel())
+	p := tea.NewProgram(getViewModel())
 	if err := p.Start(); err != nil {
 		log.Fatal(err)
 	}

@@ -9,7 +9,7 @@ import (
 )
 
 func eventSignupFailed(c *websocket.Conn, d server.Data) error {
-	signupModel := currentViewModel(viewModelSignup{}.Name()).(*viewModelSignup)
+	signupModel := getViewModel(viewModelSignup{}.Name()).(*viewModelSignup)
 	signupModel.setStatusBarContent(d.Payload.(string))
 	return nil
 }
@@ -23,8 +23,8 @@ func eventSignupSucceed(c *websocket.Conn, d server.Data) error {
 		return err
 	}
 	setPlayer(&player)
-	if v := currentViewModel(); v != nil && v.Name() == (viewModelSignup{}.Name()) {
-		currentViewModel(viewModelSignin{}.Name())
+	if v := getViewModel(); v != nil && v.Name() == (viewModelSignup{}.Name()) {
+		getViewModel(viewModelSignin{}.Name())
 		return nil
 	}
 	return fmt.Errorf("eventSignupSucceed failed")

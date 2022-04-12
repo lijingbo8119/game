@@ -1,0 +1,165 @@
+package client
+
+import (
+	"fmt"
+	"reflect"
+	"strings"
+
+	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
+	"github.com/lucasb-eyer/go-colorful"
+)
+
+
+
+
+
+func colorGrid(xSteps, ySteps int) [][]string {
+	x0y0, _ := colorful.Hex("#F25D94")
+	x1y0, _ := colorful.Hex("#EDFF82")
+	x0y1, _ := colorful.Hex("#643AFF")
+	x1y1, _ := colorful.Hex("#14F9D5")
+
+	x0 := make([]colorful.Color, ySteps)
+	for i := range x0 {
+		x0[i] = x0y0.BlendLuv(x0y1, float64(i)/float64(ySteps))
+	}
+
+	x1 := make([]colorful.Color, ySteps)
+	for i := range x1 {
+		x1[i] = x1y0.BlendLuv(x1y1, float64(i)/float64(ySteps))
+	}
+
+	grid := make([][]string, ySteps)
+	for x := 0; x < ySteps; x++ {
+		y0 := x0[x]
+		grid[x] = make([]string, xSteps)
+		for y := 0; y < xSteps; y++ {
+			grid[x][y] = y0.BlendLuv(x1[x], float64(y)/float64(xSteps)).Hex()
+		}
+	}
+
+	return grid
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+type viewModelSignin struct {
+	viewModelBase
+}
+
+func (r viewModelSignin) Name() string {
+	return reflect.TypeOf(r).Name()
+}
+
+// Update is called when messages are received. The idea is that you inspect the
+// message and send back an updated model accordingly. You can also return
+// a command, which is a function that performs I/O and returns a message.
+func (r viewModelSignin) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	return r, nil
+}
+
+// Views return a string based on data in the model. That string which will be
+// rendered to the terminal.
+func (r viewModelSignin) View() string {
+	doc := strings.Builder{}
+
+	// Title
+	{
+		var (
+			colors = colorGrid(1, 5)
+			title  strings.Builder
+		)
+
+		for i, v := range colors {
+			const offset = 2
+			c := lipgloss.Color(v[0])
+			fmt.Fprint(&title, titleStyle.Copy().MarginLeft(i*offset).Background(c))
+			if i < len(colors)-1 {
+				title.WriteRune('\n')
+			}
+		}
+
+		desc := lipgloss.JoinVertical(lipgloss.Left,
+			descStyle.Render("Style Definitions for Nice Terminal Layouts"),
+			infoStyle.Render("From Charm"+divider+urlRender("https://github.com/charmbracelet/lipgloss")),
+		)
+
+		row := lipgloss.JoinHorizontal(lipgloss.Top, title.String(), desc)
+		doc.WriteString(row + "\n\n")
+	}
+
+	// Color grid
+	colors := func() string {
+		colors := colorGrid(14, 8)
+
+		b := strings.Builder{}
+		for _, x := range colors {
+			for _, y := range x {
+				s := lipgloss.NewStyle().SetString("  ").Background(lipgloss.Color(y))
+				b.WriteString(s.String())
+			}
+			b.WriteRune('\n')
+		}
+
+		return b.String()
+	}()
+
+	lists := lipgloss.JoinHorizontal(lipgloss.Top,
+		list.Render(
+			lipgloss.JoinVertical(lipgloss.Left,
+				listHeader("Citrus Fruits to Try"),
+				listDone("Grapefruit"),
+				listDone("Yuzu"),
+				listItem("Citron"),
+				listItem("Kumquat"),
+				listItem("Pomelo"),
+			),
+		),
+		list.Copy().Width(columnWidth).Render(
+			lipgloss.JoinVertical(lipgloss.Left,
+				listHeader("Actual Lip Gloss Vendors"),
+				listItem("Glossier"),
+				listItem("Claire‘s Boutique"),
+				listDone("Nyx"),
+				listItem("Mac"),
+				listDone("Milk"),
+			),
+		),
+	)
+
+	doc.WriteString(lipgloss.JoinHorizontal(lipgloss.Top, lists, colors))
+
+	// Marmalade history
+	{
+		const (
+			historyA = "The Romans learned from the Greeks that quinces slowly cooked with honey would “set” when cool. The Apicius gives a recipe for preserving whole quinces, stems and leaves attached, in a bath of honey diluted with defrutum: Roman marmalade. Preserves of quince and lemon appear (along with rose, apple, plum and pear) in the Book of ceremonies of the Byzantine Emperor Constantine VII Porphyrogennetos."
+			historyB = "Medieval quince preserves, which went by the French name cotignac, produced in a clear version and a fruit pulp version, began to lose their medieval seasoning of spices in the 16th century. In the 17th century, La Varenne provided recipes for both thick and clear cotignac."
+			historyC = "In 1524, Henry VIII, King of England, received a “box of marmalade” from Mr. Hull of Exeter. This was probably marmelada, a solid quince paste from Portugal, still made and sold in southern Europe today. It became a favourite treat of Anne Boleyn and her ladies in waiting."
+		)
+
+		doc.WriteString(lipgloss.JoinHorizontal(
+			lipgloss.Top,
+			historyStyle.Copy().Align(lipgloss.Right).Render(historyA),
+			historyStyle.Copy().Align(lipgloss.Center).Render(historyB),
+			historyStyle.Copy().MarginRight(0).Render(historyC),
+		))
+
+		doc.WriteString("\n\n")
+	}
+
+	// Status bar
+	doc.WriteString(viewComponentStatusBar{}.View())
+
+	if (viewStyle{}.PhysicalWidth()) > 0 {
+		docStyle = docStyle.MaxWidth(viewStyle{}.PhysicalWidth())
+	}
+
+	// Okay, let's print it
+	return docStyle.Render(doc.String())
+}

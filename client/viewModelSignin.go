@@ -95,7 +95,7 @@ func (r *viewModelSignin) Init() tea.Cmd {
 
 	r.tabs = newViewComponentTabs(
 		viewComponentTab{Content: "Sign In", Active: true, Updater: func(msg tea.Msg) (tea.Model, tea.Cmd) {
-			return currentViewModel(viewModelSignup{}.Name()), nil
+			return getViewModel(viewModelSignup{}.Name()), nil
 		}},
 		viewComponentTab{Content: "Sign Up", Active: false, Updater: nil},
 	)
@@ -123,8 +123,8 @@ func (r viewModelSignin) Name() string {
 // message and send back an updated model accordingly. You can also return
 // a command, which is a function that performs I/O and returns a message.
 func (r *viewModelSignin) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	if currentViewModel().Name() != r.Name() {
-		return currentViewModel().Update(msg)
+	if getViewModel().Name() != r.Name() {
+		return getViewModel().Update(msg)
 	}
 	if r.loading {
 		return r, nil

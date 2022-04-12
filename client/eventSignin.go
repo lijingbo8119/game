@@ -27,8 +27,8 @@ func eventSigninSucceed(c *websocket.Conn, d server.Data) error {
 	if err = d.ParsePayload(&params); err != nil {
 		return err
 	}
-	if v := currentViewModel(); v != nil && v.Name() == (viewModelSignin{}.Name()) {
-		currentViewModel(viewModelHall{}.Name())
+	if v := getViewModel(); v != nil && v.Name() == (viewModelSignin{}.Name()) {
+		getViewModel(viewModelHall{}.Name())
 	}
 	return fmt.Errorf("eventSigninSucceed failed")
 }
