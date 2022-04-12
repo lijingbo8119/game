@@ -15,11 +15,11 @@ func (r cardPatternPair) Name() string {
 
 func (r cardPatternPair) Valid() bool {
 	if r.Cards().Exists(func(c *poker.Card) bool {
-		return c.Value() == poker.ValueColoredJoker || c.Value() == poker.ValueJoker
+		return c.Value == poker.ValueColoredJoker || c.Value == poker.ValueJoker
 	}) {
 		return false
 	}
-	return r.Cards().Length() == 2 && r.Cards().First().Value() == r.Cards().Last().Value()
+	return r.Cards().Length() == 2 && r.Cards().First().Value == r.Cards().Last().Value
 }
 
 func (r cardPatternPair) Same(s poker.CardPattern) bool {
@@ -30,7 +30,7 @@ func (r cardPatternPair) Equal(s poker.CardPattern) bool {
 	if !r.Same(s) || !r.Valid() || !s.Valid() {
 		return false
 	}
-	return r.Cards().First().Value() == s.Cards().First().Value()
+	return r.Cards().First().Value == s.Cards().First().Value
 }
 
 func (r cardPatternPair) Greeter(s poker.CardPattern) bool {

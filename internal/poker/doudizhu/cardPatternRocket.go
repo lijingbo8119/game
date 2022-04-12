@@ -19,7 +19,7 @@ func (r cardPatternRocket) Valid() bool {
 		return false
 	}
 	if r.Cards().Exists(func(c *poker.Card) bool {
-		return c.Value() != poker.ValueJoker && c.Value() != poker.ValueColoredJoker
+		return c.Value != poker.ValueJoker && c.Value != poker.ValueColoredJoker
 	}) {
 		return false
 	}

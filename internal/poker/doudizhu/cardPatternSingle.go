@@ -25,7 +25,7 @@ func (r cardPatternSingle) Equal(s poker.CardPattern) bool {
 	if !r.Same(s) || !r.Valid() || !s.Valid() {
 		return false
 	}
-	return r.Cards().First().Value() == s.Cards().First().Value()
+	return r.Cards().First().Value == s.Cards().First().Value
 }
 
 func (r cardPatternSingle) Greeter(s poker.CardPattern) bool {

@@ -13,7 +13,7 @@ func TestCardsSort(t *testing.T) {
 		poker.NewCard(0, 1),
 	}
 	cards.Sort()
-	if cards[0].Value() >= cards[1].Value() || cards[1].Value() >= cards[2].Value() {
+	if cards[0].Value >= cards[1].Value || cards[1].Value >= cards[2].Value {
 		t.Fatal("TestCards failed")
 	}
 }
@@ -29,7 +29,6 @@ func TestCardsSuffle(t *testing.T) {
 	cards.Shuffle()
 	fmt.Println(cards)
 }
-
 
 func TestCardsAppend(t *testing.T) {
 	cards := poker.Cards{

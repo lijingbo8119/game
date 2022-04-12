@@ -16,15 +16,15 @@ func (r cardPatternSequenceOfTriplets) Name() string {
 func (r cardPatternSequenceOfTriplets) Valid() bool {
 	ranks := DoudizhuValueRanks
 	if r.Cards().Exists(func(c *poker.Card) bool {
-		return c.Value() == poker.ValueAce
+		return c.Value == poker.ValueAce
 	}) && r.Cards().Exists(func(c *poker.Card) bool {
-		return c.Value() == poker.ValueTwo
+		return c.Value == poker.ValueTwo
 	}) {
 		ranks = poker.ValueSortRanks
 	}
 	r.Cards().Sort(ranks)
 	if r.Cards().Exists(func(c *poker.Card) bool {
-		return c.Value() == poker.ValueColoredJoker || c.Value() == poker.ValueJoker
+		return c.Value == poker.ValueColoredJoker || c.Value == poker.ValueJoker
 	}) {
 		return false
 	}

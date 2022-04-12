@@ -19,10 +19,10 @@ func (r cardPatternTripletWithPair) Valid() bool {
 		return false
 	}
 	firstValueCount := r.Cards().Count(func(c *poker.Card) bool {
-		return c.Value() == r.Cards().First().Value()
+		return c.Value == r.Cards().First().Value
 	})
 	lastValueCount := r.Cards().Count(func(c *poker.Card) bool {
-		return c.Value() == r.Cards().Last().Value()
+		return c.Value == r.Cards().Last().Value
 	})
 	return (firstValueCount == 3 || lastValueCount == 3) && firstValueCount+lastValueCount == 5
 }
@@ -44,12 +44,12 @@ func (r cardPatternTripletWithPair) Greeter(s poker.CardPattern) bool {
 	}
 	rCard := r.Cards().First(func(c1 *poker.Card) bool {
 		return r.Cards().Count(func(c2 *poker.Card) bool {
-			return c1.Value() == c2.Value()
+			return c1.Value == c2.Value
 		}) == 3
 	})
 	sCard := s.Cards().First(func(c1 *poker.Card) bool {
 		return s.Cards().Count(func(c2 *poker.Card) bool {
-			return c1.Value() == c2.Value()
+			return c1.Value == c2.Value
 		}) == 3
 	})
 	return DoudizhuValueRanks.Rank(rCard) > DoudizhuValueRanks.Rank(sCard)

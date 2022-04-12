@@ -15,7 +15,7 @@ func (r cardPatternBomb) Name() string {
 
 func (r cardPatternBomb) Valid() bool {
 	r.Cards().Sort(DoudizhuValueRanks)
-	return r.Cards().Length() == 4 && r.Cards().First().Value() == r.Cards().Last().Value()
+	return r.Cards().Length() == 4 && r.Cards().First().Value == r.Cards().Last().Value
 }
 
 func (r cardPatternBomb) Same(s poker.CardPattern) bool {

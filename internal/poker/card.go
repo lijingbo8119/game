@@ -1,56 +1,12 @@
 package poker
 
-import "fmt"
-
-type Suit uint8
-
-const (
-	SuitNone Suit = iota
-	SuitHeart
-	SuitDiamond
-	SuitClub
-	SuitSpade
+import (
+	"encoding/json"
+	"fmt"
 )
 
-type Card struct {
-	suit  Suit
-	value Value
-}
-
-func (r Card) Suit() Suit {
-	return r.suit
-}
-
-func (r Card) Value() Value {
-	return r.value
-}
-
-func (r Card) String() string {
-	suitMap := map[Suit]string{
-		SuitNone:    "none",
-		SuitHeart:   "♥",
-		SuitDiamond: "♣",
-		SuitClub:    "♦",
-		SuitSpade:   "♠",
-	}
-	valueMap := map[Value]string{
-		ValueAce:          "A",
-		ValueTwo:          "2",
-		ValueThree:        "3",
-		ValueFour:         "4",
-		ValueFive:         "5",
-		ValueSix:          "6",
-		ValueSeven:        "7",
-		ValueEight:        "8",
-		ValueNine:         "9",
-		ValueTen:          "10",
-		ValueJack:         "J",
-		ValueQueen:        "Q",
-		ValueKing:         "K",
-		ValueJoker:        "joker",
-		ValueColoredJoker: "JOKER",
-	}
-	unicodeMap := map[string]string{
+var (
+	unicodeMap = map[string]string{
 		fmt.Sprintf("%d%d", SuitNone, ValueNone): "🂠",
 
 		fmt.Sprintf("%d%d", SuitNone, ValueColoredJoker): "🃏",
@@ -112,16 +68,60 @@ func (r Card) String() string {
 		fmt.Sprintf("%d%d", SuitSpade, ValueQueen): "🂭",
 		fmt.Sprintf("%d%d", SuitSpade, ValueKing):  "🂮",
 	}
-	display, ok := unicodeMap[fmt.Sprintf("%d%d", r.suit, r.value)]
+)
+
+type Card struct {
+	Suit  Suit
+	Value Value
+}
+
+func (r Card) String() string {
+	display, ok := unicodeMap[fmt.Sprintf("%d%d", r.Suit, r.Value)]
 	if ok {
 		return display
 	}
-	return suitMap[r.suit] + valueMap[r.value]
+	return fmt.Sprintf("%s-%s", suitMap[r.Suit], valueMap[r.Value])
+}
+
+func (r *Card) UnmarshalJSON(data []byte) error {
+	m := map[string]string{}
+	if err := json.Unmarshal(data, &m); err != nil {
+		return err
+	}
+	suit, ok := m["suit"]
+	if !ok {
+		return fmt.Errorf("Card UnmarshalJSON error")
+	}
+	for k, v := range suitMap {
+		if v == suit {
+			r.Suit = k
+			break
+		}
+	}
+	value, ok := m["value"]
+	if !ok {
+		return fmt.Errorf("Card UnmarshalJSON error")
+	}
+	for k, v := range valueMap {
+		if v == value {
+			r.Value = k
+			break
+		}
+	}
+	return nil
+}
+
+func (r Card) MarshalJSON() ([]byte, error) {
+	m := map[string]string{
+		"suit":  suitMap[r.Suit],
+		"value": valueMap[r.Value],
+	}
+	return json.Marshal(m)
 }
 
 func NewCard(suit Suit, value Value) *Card {
 	return &Card{
-		suit:  suit,
-		value: value,
+		Suit:  suit,
+		Value: value,
 	}
 }

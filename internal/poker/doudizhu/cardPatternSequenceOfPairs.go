@@ -16,15 +16,15 @@ func (r cardPatternSequenceOfPairs) Name() string {
 func (r cardPatternSequenceOfPairs) Valid() bool {
 	ranks := DoudizhuValueRanks
 	if r.Cards().Exists(func(c *poker.Card) bool {
-		return c.Value() == poker.ValueAce
+		return c.Value == poker.ValueAce
 	}) && r.Cards().Exists(func(c *poker.Card) bool {
-		return c.Value() == poker.ValueTwo
+		return c.Value == poker.ValueTwo
 	}) {
 		ranks = poker.ValueSortRanks
 	}
 	r.Cards().Sort(ranks)
 	if r.Cards().Exists(func(c *poker.Card) bool {
-		return c.Value() == poker.ValueColoredJoker || c.Value() == poker.ValueJoker
+		return c.Value == poker.ValueColoredJoker || c.Value == poker.ValueJoker
 	}) {
 		return false
 	}
@@ -58,7 +58,7 @@ func (r cardPatternSequenceOfPairs) Equal(s poker.CardPattern) bool {
 	if !r.Same(s) || !r.Valid() || !s.Valid() || r.Cards().Length() != s.Cards().Length() {
 		return false
 	}
-	return r.Cards().First().Value() == s.Cards().First().Value()
+	return r.Cards().First().Value == s.Cards().First().Value
 }
 
 func (r cardPatternSequenceOfPairs) Greeter(s poker.CardPattern) bool {

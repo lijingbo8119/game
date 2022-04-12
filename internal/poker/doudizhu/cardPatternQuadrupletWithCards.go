@@ -54,12 +54,12 @@ func (r cardPatternQuadrupletWithCards) Greeter(s poker.CardPattern) bool {
 	}
 	rCard := r.Cards().First(func(c1 *poker.Card) bool {
 		return r.Cards().Count(func(c2 *poker.Card) bool {
-			return c1.Value() == c2.Value()
+			return c1.Value == c2.Value
 		}) == 4
 	})
 	sCard := s.Cards().First(func(c1 *poker.Card) bool {
 		return s.Cards().Count(func(c2 *poker.Card) bool {
-			return c1.Value() == c2.Value()
+			return c1.Value == c2.Value
 		}) == 4
 	})
 	return DoudizhuValueRanks.Rank(rCard) > DoudizhuValueRanks.Rank(sCard)

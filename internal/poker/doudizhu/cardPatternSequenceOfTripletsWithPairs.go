@@ -15,7 +15,7 @@ func (r cardPatternSequenceOfTripletsWithPairs) Name() string {
 
 func (r cardPatternSequenceOfTripletsWithPairs) Valid() bool {
 	if r.Cards().Exists(func(c *poker.Card) bool {
-		return c.Value() == poker.ValueColoredJoker || c.Value() == poker.ValueJoker
+		return c.Value == poker.ValueColoredJoker || c.Value == poker.ValueJoker
 	}) {
 		return false
 	}
@@ -26,14 +26,14 @@ func (r cardPatternSequenceOfTripletsWithPairs) Valid() bool {
 	ranks := DoudizhuValueRanks
 	if r.Cards().Exists(func(c *poker.Card) bool {
 		for val := range tripletsCardsCounts {
-			if c.Value() == poker.ValueAce && c.Value() == val {
+			if c.Value == poker.ValueAce && c.Value == val {
 				return true
 			}
 		}
 		return false
 	}) && r.Cards().Exists(func(c *poker.Card) bool {
 		for val := range tripletsCardsCounts {
-			if c.Value() == poker.ValueTwo && c.Value() == val {
+			if c.Value == poker.ValueTwo && c.Value == val {
 				return true
 			}
 		}
@@ -48,7 +48,7 @@ func (r cardPatternSequenceOfTripletsWithPairs) Valid() bool {
 	}
 	subCards := r.Cards().SubCards(func(c *poker.Card) bool {
 		for val := range tripletsCardsCounts {
-			if val == c.Value() {
+			if val == c.Value {
 				return true
 			}
 		}
@@ -94,12 +94,12 @@ func (r cardPatternSequenceOfTripletsWithPairs) Greeter(s poker.CardPattern) boo
 	}
 	rCard := r.Cards().Last(func(c1 *poker.Card) bool {
 		return r.Cards().Count(func(c2 *poker.Card) bool {
-			return c1.Value() == c2.Value()
+			return c1.Value == c2.Value
 		}) == 3
 	})
 	sCard := s.Cards().Last(func(c1 *poker.Card) bool {
 		return s.Cards().Count(func(c2 *poker.Card) bool {
-			return c1.Value() == c2.Value()
+			return c1.Value == c2.Value
 		}) == 3
 	})
 	return DoudizhuValueRanks.Rank(rCard) > DoudizhuValueRanks.Rank(sCard)

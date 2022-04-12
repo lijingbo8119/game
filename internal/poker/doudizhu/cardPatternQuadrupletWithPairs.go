@@ -21,7 +21,7 @@ func (r cardPatternQuadrupletWithPairs) Valid() bool {
 	counts := r.Cards().Counts()
 	count4 := r.Cards().Count(func(c *poker.Card) bool {
 		for value, count := range counts {
-			if count == 4 && c.Value() == value {
+			if count == 4 && c.Value == value {
 				return true
 			}
 		}
@@ -33,7 +33,7 @@ func (r cardPatternQuadrupletWithPairs) Valid() bool {
 	if count4 == 4 {
 		count2 := r.Cards().Count(func(c *poker.Card) bool {
 			for value, count := range counts {
-				if count == 2 && c.Value() == value {
+				if count == 2 && c.Value == value {
 					return true
 				}
 			}
@@ -67,12 +67,12 @@ func (r cardPatternQuadrupletWithPairs) Greeter(s poker.CardPattern) bool {
 	}
 	rCard := r.Cards().First(func(c1 *poker.Card) bool {
 		return r.Cards().Count(func(c2 *poker.Card) bool {
-			return c1.Value() == c2.Value()
+			return c1.Value == c2.Value
 		}) == 4
 	})
 	sCard := s.Cards().First(func(c1 *poker.Card) bool {
 		return s.Cards().Count(func(c2 *poker.Card) bool {
-			return c1.Value() == c2.Value()
+			return c1.Value == c2.Value
 		}) == 4
 	})
 	return DoudizhuValueRanks.Rank(rCard) > DoudizhuValueRanks.Rank(sCard)

@@ -15,7 +15,7 @@ func (r cardPatternTriplet) Name() string {
 
 func (r cardPatternTriplet) Valid() bool {
 	r.Cards().Sort(DoudizhuValueRanks)
-	return r.Cards().Length() == 3 && r.Cards().First().Value() == r.Cards().Last().Value()
+	return r.Cards().Length() == 3 && r.Cards().First().Value == r.Cards().Last().Value
 }
 
 func (r cardPatternTriplet) Same(s poker.CardPattern) bool {
@@ -26,7 +26,7 @@ func (r cardPatternTriplet) Equal(s poker.CardPattern) bool {
 	if !r.Same(s) || !r.Valid() || !s.Valid() {
 		return false
 	}
-	return r.Cards().First().Value() == s.Cards().First().Value()
+	return r.Cards().First().Value == s.Cards().First().Value
 }
 
 func (r cardPatternTriplet) Greeter(s poker.CardPattern) bool {

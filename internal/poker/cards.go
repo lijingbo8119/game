@@ -103,10 +103,10 @@ func (r Cards) Counts(closure ...CardCountsClosure) map[Value]int {
 	}()
 	temp := map[Value]int{}
 	for _, c := range r {
-		if _, ok := temp[c.Value()]; !ok {
-			temp[c.Value()] = 0
+		if _, ok := temp[c.Value]; !ok {
+			temp[c.Value] = 0
 		}
-		temp[c.Value()]++
+		temp[c.Value]++
 	}
 	result := map[Value]int{}
 	for val, count := range temp {
