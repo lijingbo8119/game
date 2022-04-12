@@ -29,21 +29,8 @@ const (
 	RankNine
 )
 
-type Tile struct {
-	s Suit
-	r Rank
-}
-
-func (r Tile) Suit() Suit {
-	return r.s
-}
-
-func (r Tile) Rank() Rank {
-	return r.r
-}
-
-func (r Tile) String() string {
-	unicodeMap := map[string]string{
+var (
+	tileUnicodeMap = map[string]string{
 		fmt.Sprintf("%d%d", SuitNone, RankNone): "🀫",
 
 		fmt.Sprintf("%d%d", SuitFlower, RankOne):   "🀢",
@@ -94,7 +81,22 @@ func (r Tile) String() string {
 		fmt.Sprintf("%d%d", SuitCharacter, RankEight): "🀎",
 		fmt.Sprintf("%d%d", SuitCharacter, RankNine):  "🀏",
 	}
-	display, ok := unicodeMap[fmt.Sprintf("%d%d", r.s, r.r)]
+)
+type Tile struct {
+	s Suit
+	r Rank
+}
+
+func (r Tile) Suit() Suit {
+	return r.s
+}
+
+func (r Tile) Rank() Rank {
+	return r.r
+}
+
+func (r Tile) String() string {
+	display, ok := tileUnicodeMap[fmt.Sprintf("%d%d", r.s, r.r)]
 	if !ok {
 		panic(r)
 	}

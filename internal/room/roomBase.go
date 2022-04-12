@@ -17,14 +17,14 @@ func (r roomBase) Id() uuid.UUID {
 	return r.id
 }
 
-// without framePlayerSay
+// without framePlayerTalk
 func (r roomBase) lastFrame(closure ...func(f frame) bool) frame {
 	var _closure func(f frame) bool
 	if len(closure) > 0 {
 		_closure = closure[0]
 	}
 	for i := len(r.Frames) - 1; i >= 0; i-- {
-		if _, ok := r.Frames[i].(framePlayerSay); ok {
+		if _, ok := r.Frames[i].(framePlayerTalk); ok {
 			continue
 		}
 		if _closure == nil || _closure(r.Frames[i]) {

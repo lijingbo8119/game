@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	unicodeMap = map[string]string{
+	cardUnicodeMap = map[string]string{
 		fmt.Sprintf("%d%d", SuitNone, ValueNone): "🂠",
 
 		fmt.Sprintf("%d%d", SuitNone, ValueColoredJoker): "🃏",
@@ -76,7 +76,7 @@ type Card struct {
 }
 
 func (r Card) String() string {
-	display, ok := unicodeMap[fmt.Sprintf("%d%d", r.Suit, r.Value)]
+	display, ok := cardUnicodeMap[fmt.Sprintf("%d%d", r.Suit, r.Value)]
 	if ok {
 		return display
 	}

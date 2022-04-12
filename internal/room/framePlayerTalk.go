@@ -7,29 +7,29 @@ import (
 	"time"
 )
 
-type framePlayerSay struct {
+type framePlayerTalk struct {
 	T       time.Time      `json:"time"`
 	Player  *player.Player `json:"player"`
-	Content string
+	Content string         `json:"content"`
 }
 
-func (r framePlayerSay) Name() string {
+func (r framePlayerTalk) Name() string {
 	return reflect.TypeOf(r).Name()
 }
 
-func (r framePlayerSay) Time() time.Time {
+func (r framePlayerTalk) Time() time.Time {
 	return r.T
 }
 
-func (r framePlayerSay) beforeUpdate(ro Room) error {
+func (r framePlayerTalk) beforeUpdate(ro Room) error {
 	return nil
 }
 
-func (r framePlayerSay) update(ro Room) error {
+func (r framePlayerTalk) update(ro Room) error {
 	return nil
 }
 
-func (r framePlayerSay) MarshalJSON() ([]byte, error) {
+func (r framePlayerTalk) MarshalJSON() ([]byte, error) {
 	m := map[string]interface{}{
 		"name":    r.Name(),
 		"time":    r.T,
@@ -40,7 +40,7 @@ func (r framePlayerSay) MarshalJSON() ([]byte, error) {
 }
 
 func NewFramePlayerSay(p *player.Player, content string) frame {
-	return framePlayerSay{
+	return framePlayerTalk{
 		Player:  p,
 		T:       time.Now(),
 		Content: content,
