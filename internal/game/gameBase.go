@@ -1,16 +1,16 @@
-package room
+package game
 
 import (
 	"github.com/gofrs/uuid"
 	"github.com/samber/lo"
 )
 
-type roomBase struct {
+type gameBase struct {
 	id     uuid.UUID
 	Frames []frame
 }
 
-func (r roomBase) Id() uuid.UUID {
+func (r gameBase) Id() uuid.UUID {
 	if r.id.IsNil() {
 		r.id = uuid.Must(uuid.NewV4())
 	}
@@ -18,7 +18,7 @@ func (r roomBase) Id() uuid.UUID {
 }
 
 // without framePlayerTalk
-func (r roomBase) lastFrame(closure ...func(f frame) bool) frame {
+func (r gameBase) lastFrame(closure ...func(f frame) bool) frame {
 	var _closure func(f frame) bool
 	if len(closure) > 0 {
 		_closure = closure[0]
@@ -34,6 +34,6 @@ func (r roomBase) lastFrame(closure ...func(f frame) bool) frame {
 	return nil
 }
 
-func (r roomBase) framesCountBy(closure func(f frame) bool) int {
+func (r gameBase) framesCountBy(closure func(f frame) bool) int {
 	return lo.CountBy(r.Frames, closure)
 }

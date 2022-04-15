@@ -7,11 +7,11 @@ import (
 	"testing"
 )
 
-func TestRoom(t *testing.T) {
-	room := doudizhu.Room{}
+func TestGame(t *testing.T) {
+	game := doudizhu.Game{}
 	p := &player.Player{
 		Username: "zhangsan",
 	}
-	room.Enter(p)
-	fmt.Println(p, len(room.GetPlayers()))
+	game.Enter(p)
+	fmt.Println(p, len(game.GetPlayers()))
 }

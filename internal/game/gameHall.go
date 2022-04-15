@@ -1,4 +1,4 @@
-package room
+package game
 
 import (
 	"fmt"
@@ -8,38 +8,38 @@ import (
 	"github.com/samber/lo"
 )
 
-type RoomHall struct {
-	roomBase
+type GameHall struct {
+	gameBase
 	players []*player.Player
 }
 
-func (r RoomHall) Name() string {
+func (r GameHall) Name() string {
 	return reflect.TypeOf(r).Name()
 }
 
-func (r RoomHall) Players() []*player.Player {
+func (r GameHall) Players() []*player.Player {
 	return r.players
 }
 
-func (r RoomHall) HasPlayer(p *player.Player) bool {
+func (r GameHall) HasPlayer(p *player.Player) bool {
 	_, ok := lo.Find(r.Players(), func(t *player.Player) bool {
 		return p == t
 	})
 	return ok
 }
 
-func (r *RoomHall) Enter(p *player.Player) error {
+func (r *GameHall) Enter(p *player.Player) error {
 	if r.HasPlayer(p) {
 		return nil
 	}
-	if room := FindRoomByPlayerId(p.Id); room != nil {
-		return fmt.Errorf("Enter room error")
+	if game := FindGameByPlayerId(p.Id); game != nil {
+		return fmt.Errorf("Enter game error")
 	}
 	r.players = append(r.players, p)
 	return nil
 }
 
-func (r *RoomHall) Leave(p *player.Player) error {
+func (r *GameHall) Leave(p *player.Player) error {
 	index := lo.IndexOf(r.players, p)
 	if index == -1 {
 		return nil
@@ -48,6 +48,6 @@ func (r *RoomHall) Leave(p *player.Player) error {
 	return nil
 }
 
-func (r *RoomHall) AppendFrame(f frame) error {
+func (r *GameHall) AppendFrame(f frame) error {
 	return nil
 }

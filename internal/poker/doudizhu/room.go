@@ -6,24 +6,24 @@ import (
 	"sync"
 )
 
-const RoomName = "doudizhu"
+const GameName = "doudizhu"
 
-type Room struct {
+type Game struct {
 	mux     sync.RWMutex
 	players []*player.Player
 }
 
-func (r *Room) Name() string {
-	return RoomName
+func (r *Game) Name() string {
+	return GameName
 }
 
-func (r *Room) GetPlayers() []*player.Player {
+func (r *Game) GetPlayers() []*player.Player {
 	r.mux.RLock()
 	defer r.mux.RUnlock()
 	return r.players
 }
 
-func (r *Room) Enter(p *player.Player) error {
+func (r *Game) Enter(p *player.Player) error {
 	r.mux.Lock()
 	defer r.mux.Unlock()
 	if len(r.players) == 3 {

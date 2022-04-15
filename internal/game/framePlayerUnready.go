@@ -1,4 +1,4 @@
-package room
+package game
 
 import (
 	"encoding/json"
@@ -9,7 +9,7 @@ import (
 )
 
 type framePlayerUnready struct {
-	T      time.Time      `json:"time"`
+	Time   time.Time      `json:"time"`
 	Player *player.Player `json:"player"`
 }
 
@@ -17,12 +17,12 @@ func (r framePlayerUnready) Name() string {
 	return reflect.TypeOf(r).Name()
 }
 
-func (r framePlayerUnready) Time() time.Time {
-	return r.T
+func (r framePlayerUnready) time() time.Time {
+	return r.Time
 }
 
-func (r framePlayerUnready) beforeUpdate(ro Room) error {
-	f := ro.lastFrame()
+func (r framePlayerUnready) beforeUpdate(g Game) error {
+	f := g.lastFrame()
 	if f == nil {
 		return nil
 	}
@@ -37,15 +37,19 @@ func (r framePlayerUnready) beforeUpdate(ro Room) error {
 	return nil
 }
 
-func (r framePlayerUnready) update(ro Room) error {
+func (r framePlayerUnready) update(g Game) error {
 	return nil
+}
+
+func (r framePlayerUnready) String() string {
+	return ""
 }
 
 func (r framePlayerUnready) MarshalJSON() ([]byte, error) {
 	m := map[string]interface{}{
-		"name":   r.Name(),
-		"time":   r.T,
-		"player": r.Player,
+		"name":      r.Name(),
+		"time":      r.time(),
+		"player_id": r.Player.Id,
 	}
 	return json.Marshal(m)
 }
@@ -53,6 +57,6 @@ func (r framePlayerUnready) MarshalJSON() ([]byte, error) {
 func NewFramePlayerUnready(p *player.Player) frame {
 	return framePlayerUnready{
 		Player: p,
-		T:      time.Now(),
+		Time:   time.Now(),
 	}
 }

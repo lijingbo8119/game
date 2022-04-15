@@ -11,15 +11,15 @@ const (
 	NetCmdSigninFailedResponse  NetCmd = "signin_failed_response"
 	NetCmdSigninSucceedResponse NetCmd = "signin_succeed_response"
 
-	NetCmdGetRoomListRequest         NetCmd = "GetRoomList_request"
-	NetCmdGetRoomListFailedResponse  NetCmd = "GetRoomList_failed_response"
-	NetCmdGetRoomListSucceedResponse NetCmd = "GetRoomList_succeed_response"
+	NetCmdGetGameListRequest         NetCmd = "GetGameList_request"
+	NetCmdGetGameListFailedResponse  NetCmd = "GetGameList_failed_response"
+	NetCmdGetGameListSucceedResponse NetCmd = "GetGameList_succeed_response"
 
-	NetCmdGetRoomRequest         NetCmd = "GetRoom_request"
-	NetCmdGetRoomFailedResponse  NetCmd = "GetRoom_failed_response"
-	NetCmdGetRoomSucceedResponse NetCmd = "GetRoom_succeed_response"
+	NetCmdGetGameRequest         NetCmd = "GetGame_request"
+	NetCmdGetGameFailedResponse  NetCmd = "GetGame_failed_response"
+	NetCmdGetGameSucceedResponse NetCmd = "GetGame_succeed_response"
 
-	NetCmdEnterRoomRequest         NetCmd = "EnterRoom_request"
-	NetCmdEnterRoomFailedResponse  NetCmd = "EnterRoom_failed_response"
-	NetCmdEnterRoomSucceedResponse NetCmd = "EnterRoom_succeed_response"
+	NetCmdEnterGameRequest         NetCmd = "EnterGame_request"
+	NetCmdEnterGameFailedResponse  NetCmd = "EnterGame_failed_response"
+	NetCmdEnterGameSucceedResponse NetCmd = "EnterGame_succeed_response"
 )

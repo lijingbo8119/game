@@ -1,14 +1,16 @@
-package room_test
+package game_test
 
 import (
+	"fmt"
+	"game/internal/game"
 	"game/internal/player"
-	"game/internal/room"
+	"game/util"
 	"testing"
 
 	"github.com/gofrs/uuid"
 )
 
-func TestRoomDoudizhuEnter(t *testing.T) {
+func TestFrameGamePokerDoudizhuStart(t *testing.T) {
 	p1 := &player.Player{
 		Id:       uuid.Must(uuid.NewV4()),
 		Nickname: "张三",
@@ -21,11 +23,11 @@ func TestRoomDoudizhuEnter(t *testing.T) {
 		Id:       uuid.Must(uuid.NewV4()),
 		Nickname: "王五",
 	}
-	r := room.RoomPokerDoudizhu{}
+	r := game.GamePokerDoudizhu{}
 	r.Enter(p1)
 	r.Enter(p2)
 	r.Enter(p3)
-	if len(r.Players()) != 3 {
-		t.Fatalf("TestRoomDoudizhuEnter failed")
-	}
+	f1 := game.NewFrameGamePokerDoudizhuStart()
+	r.AppendFrame(f1)
+	fmt.Println(util.JsonMustMarshalString(r))
 }

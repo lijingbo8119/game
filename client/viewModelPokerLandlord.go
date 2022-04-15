@@ -2,7 +2,7 @@ package client
 
 import (
 	"fmt"
-	"game/internal/room"
+	"game/internal/game"
 	"reflect"
 	"strings"
 
@@ -11,19 +11,19 @@ import (
 
 type viewModelPokerDoudizhu struct {
 	viewModelBase
-	room *room.RoomPokerDoudizhu
+	game *game.GamePokerDoudizhu
 }
 
 func (r viewModelPokerDoudizhu) Name() string {
 	return reflect.TypeOf(r).Name()
 }
 
-func (r *viewModelPokerDoudizhu) SetRoom(ro room.Room) error {
-	_room, ok := ro.(*room.RoomPokerDoudizhu)
+func (r *viewModelPokerDoudizhu) SetGame(g game.Game) error {
+	_game, ok := g.(*game.GamePokerDoudizhu)
 	if !ok {
-		return fmt.Errorf("room type error")
+		return fmt.Errorf("game type error")
 	}
-	r.room = _room
+	r.game = _game
 	return nil
 }
 

@@ -1,7 +1,7 @@
 package client
 
 import (
-	"game/internal/room"
+	"game/internal/game"
 	"reflect"
 	"strings"
 
@@ -10,15 +10,15 @@ import (
 
 type viewModelHall struct {
 	viewModelBase
-	rooms []room.Room
+	games []game.Game
 }
 
 func (r viewModelHall) Name() string {
 	return reflect.TypeOf(r).Name()
 }
 
-func (r *viewModelHall) SetRooms(rooms []room.Room) {
-	r.rooms = rooms
+func (r *viewModelHall) SetGames(games []game.Game) {
+	r.games = games
 }
 
 // Update is called when messages are received. The idea is that you inspect the
